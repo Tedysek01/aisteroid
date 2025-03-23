@@ -49,7 +49,7 @@ export function BlogPostDetails({ slug }: { slug: string }) {
         <article>
           <div className="relative h-[400px] rounded-xl overflow-hidden mb-8">
             <Image
-              src={post.coverImage}
+              src={post.coverImage || "https://images.unsplash.com/photo-1677442136019-21780ecad995"}
               alt={post.title}
               fill
               className="object-cover"

@@ -42,7 +42,7 @@ export function BlogSection() {
               <Link href={`/blog/${post.id}`}>
                 <div className="relative h-48 overflow-hidden">
                   <Image
-                    src={post.coverImage}
+                    src={post.coverImage || "https://images.unsplash.com/photo-1677442136019-21780ecad995"}
                     alt={post.title}
                     fill
                     className="object-cover"
