@@ -56,7 +56,9 @@ export function AddBlogPostForm() {
   const editor = useEditor({
     extensions: [
       StarterKit,
-      //Image, //Removed as it's from tiptap and not next/image
+      Image.configure({
+        inline: true,
+      }),
       Link,
       Table.configure({
         resizable: true,
@@ -95,7 +97,10 @@ export function AddBlogPostForm() {
   const handleEditorImageUpload = useCallback((file: File) => {
     const reader = new FileReader();
     reader.onloadend = () => {
-      editor?.chain().focus().setImage({ src: reader.result as string }).run();
+      editor?.chain().focus().insertContent({
+        type: 'image',
+        attrs: { src: reader.result as string }
+      }).run();
     };
     reader.readAsDataURL(file);
   }, [editor]);
