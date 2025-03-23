@@ -3,7 +3,7 @@
 import { useState, useCallback } from "react";
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import Image from '@tiptap/extension-image';
+import Image from 'next/image'; // Corrected import statement
 import Link from '@tiptap/extension-link';
 import Table from '@tiptap/extension-table';
 import TableRow from '@tiptap/extension-table-row';
@@ -56,7 +56,7 @@ export function AddBlogPostForm() {
   const editor = useEditor({
     extensions: [
       StarterKit,
-      Image,
+      //Image, //Removed as it's from tiptap and not next/image
       Link,
       Table.configure({
         resizable: true,
@@ -105,7 +105,7 @@ export function AddBlogPostForm() {
     const slug = title.toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '');
-    
+
     setFormData(prev => ({
       ...prev,
       title,
@@ -115,7 +115,7 @@ export function AddBlogPostForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const blogPost: BlogPost = {
       id: formData.slug || String(Date.now()),
       title: formData.title,
@@ -133,7 +133,7 @@ export function AddBlogPostForm() {
 
     try {
       BlogService.createPost(blogPost);
-      
+
       // Reset form
       setFormData({
         title: "",
@@ -149,7 +149,7 @@ export function AddBlogPostForm() {
         featuredImagePreview: "",
       });
       editor?.commands.setContent("");
-      
+
       alert("Blog post saved successfully!");
     } catch (error) {
       alert("Error saving blog post. Please try again.");
