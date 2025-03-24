@@ -1,6 +1,6 @@
 "use client";
 
-import { Brain, Zap, Shield } from "lucide-react";
+import { Bot, Sparkles, Rocket, Brain, Cpu, Zap } from "lucide-react";
 import { Hero } from "@/components/ui/hero";
 import { FeatureCard } from "@/components/ui/feature-card";
 import { PromptSection } from "@/components/ui/prompt-section";
@@ -9,26 +9,36 @@ import { BlogSection } from "@/components/ui/blog-section";
 import { WaitlistSection } from "@/components/ui/waitlist-section";
 import { FAQ } from "@/components/ui/faq";
 import { Contact } from "@/components/ui/contact";
+import { PromptCard } from "@/components/ui/prompt-card";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 export default function Home() {
   const features = [
     {
-      title: "Advanced AI Models",
-      description: "Access state-of-the-art AI models trained on diverse datasets for superior performance.",
-      icon: "Brain",
-      gradient: "from-blue-600/20 via-blue-500/10 to-transparent"
+      title: "Reální AI agenti, ne jen hračky",
+      description: "Vybírej z agentů, kteří dělají konkrétní práci – shrnou e-maily, vytvoří texty, sledují recenze nebo připraví odpovědi.",
+      icon: "Bot",
+      gradient: "from-blue-600 via-blue-500 to-indigo-600",
+      shadowColor: "rgba(59, 130, 246, 0.6)",
+      iconColor: "text-blue-400"
     },
     {
-      title: "Real-time Processing",
-      description: "Get instant results with our optimized infrastructure and efficient processing pipeline.",
-      icon: "Zap",
-      gradient: "from-purple-600/20 via-purple-500/10 to-transparent"
+      title: "Prompty, které fakt fungují",
+      description: "Žádné napiš mi článek o X. Každý prompt je vyladěný tak, aby řešil konkrétní problém – s místem na doplnění, připravený ke zkopírování nebo použití s agentem..",
+      icon: "Sparkles",
+      gradient: "from-purple-600 via-violet-500 to-fuchsia-600",
+      shadowColor: "rgba(124, 58, 237, 0.6)",
+      iconColor: "text-purple-400"
     },
     {
-      title: "Enterprise Security",
-      description: "Your data is protected with enterprise-grade security and encryption protocols.",
-      icon: "Shield",
-      gradient: "from-emerald-600/20 via-emerald-500/10 to-transparent"
+      title: "Začni během 2 minut",
+      description: "Nemusíš nic instalovat, nepotřebuješ žádné technické znalosti. Vyber si agenta nebo prompt, zadej vstup a sleduj výsledek.",
+      icon: "Rocket",
+      gradient: "from-cyan-600 via-teal-500 to-emerald-600",
+      shadowColor: "rgba(16, 185, 129, 0.6)",
+      iconColor: "text-emerald-400"
     }
   ];
 
@@ -38,29 +48,147 @@ export default function Home() {
         <Hero />
         
         <section className="py-24 px-6 lg:px-8 bg-[#121212] relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-transparent to-transparent" />
+          {/* Advanced Cyberpunk Background Effects */}
+          <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 via-purple-900/10 to-transparent" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500/10 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-purple-500/10 via-transparent to-transparent" />
+          
+          {/* Digital Circuit Pattern */}
+          <div className="absolute inset-0 opacity-5" 
+               style={{
+                 backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230000ff' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+               }} 
+          />
+          
+          {/* Grid Lines */}
+          <div className="absolute inset-0 opacity-[0.03]" 
+               style={{
+                 backgroundImage: `linear-gradient(rgba(0, 170, 255, 0.5) 1px, transparent 1px), 
+                                   linear-gradient(90deg, rgba(0, 170, 255, 0.5) 1px, transparent 1px)`,
+                 backgroundSize: '50px 50px'
+               }} 
+          />
+          
           <div className="mx-auto max-w-7xl relative">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="text-center mb-16"
+            >
+              <div className="inline-block px-4 py-1 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-400 text-sm font-medium mb-4">
+                <div className="flex items-center justify-center gap-2">
+                  <Cpu className="w-4 h-4 text-blue-400" />
+                  <span>HLAVNÍ FUNKCE</span>
+                </div>
+              </div>
+              <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-white to-purple-400">
+              Proč AISTEROID?
+              </h2>
+              <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+              Protože AI nemusí být složitá.
+Aisteroid ti dá nástroje, které rovnou fungují – bez kódování, bez nastavování, bez zbytečnýho přemýšlení.
+
+
+              </p>
+            </motion.div>
+            
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               {features.map((feature, index) => (
-                <div 
-                  key={index} 
-                  className="relative rounded-[20px] bg-[#1C1C1C] p-8 transition-all duration-300 hover:bg-[#242424] overflow-hidden group"
+                <motion.div 
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="relative rounded-2xl backdrop-blur-lg p-8 transition-all duration-500 group overflow-hidden"
+                  style={{
+                    boxShadow: `0 0 30px rgba(0, 0, 0, 0.3)`,
+                  }}
                 >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                  {/* Gradient background */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#1A1A1A] to-[#0F0F0F] rounded-2xl" />
+                  
+                  {/* Hover gradient effect */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-10 group-hover:opacity-20 transition-opacity duration-500 rounded-2xl`} />
+                  
+                  {/* Border glow */}
+                  <div className="absolute inset-0 rounded-2xl border border-white/5 group-hover:border-white/10 transition-colors duration-500" />
+                  
+                  {/* Animated corner lights */}
+                  <div className="absolute w-20 h-20 -top-10 -right-10 bg-gradient-to-br from-white/0 via-white/0 to-white/5 rounded-full blur-xl group-hover:opacity-100 opacity-0 transition-opacity duration-500" />
+                  <div className="absolute w-20 h-20 -bottom-10 -left-10 bg-gradient-to-tl from-white/0 via-white/0 to-white/5 rounded-full blur-xl group-hover:opacity-100 opacity-0 transition-opacity duration-500" />
+                  
                   <div className="relative">
-                    <div className="mb-6 inline-flex items-center justify-center rounded-[12px] bg-[#2A2A2A] p-3 bg-gradient-to-br from-[#2A2A2A] to-[#1C1C1C]">
-                      {feature.icon === "Brain" && <Brain className="h-6 w-6 text-blue-500" />}
-                      {feature.icon === "Zap" && <Zap className="h-6 w-6 text-purple-500" />}
-                      {feature.icon === "Shield" && <Shield className="h-6 w-6 text-emerald-500" />}
+                    <div className="mb-6 inline-flex items-center justify-center rounded-xl p-3 relative overflow-hidden group-hover:scale-105 transition-all duration-300">
+                      {/* Icon container with specialized gradient */}
+                      <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-20 rounded-xl`} />
+                      
+                      {/* Icon container with glow */}
+                      <div 
+                        className="relative p-4 rounded-xl"
+                        style={{
+                          boxShadow: `0 0 20px ${feature.shadowColor}`
+                        }}
+                      >
+                        {feature.icon === "Bot" && <Bot className={`h-7 w-7 ${feature.iconColor}`} />}
+                        {feature.icon === "Sparkles" && <Sparkles className={`h-7 w-7 ${feature.iconColor}`} />}
+                        {feature.icon === "Rocket" && <Rocket className={`h-7 w-7 ${feature.iconColor}`} />}
+
+                        {/* Pulsing animation behind icon */}
+                        <div 
+                          className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"
+                          style={{
+                            background: `radial-gradient(circle, ${feature.shadowColor} 0%, rgba(0,0,0,0) 70%)`,
+                            animation: 'pulse 2s infinite'
+                          }}
+                        />
+                      </div>
                     </div>
-                    <h3 className="mb-3 text-xl font-semibold text-white">
+                    
+                    <h3 className="mb-3 text-xl font-semibold text-white group-hover:text-transparent group-hover:bg-clip-text transition-all duration-300 bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-300"
+                        style={{
+                          backgroundImage: `linear-gradient(90deg, #fff 0%, #f0f0f0 100%)`,
+                          backgroundSize: '200% 100%',
+                          backgroundPositionX: '0%'
+                        }}
+                    >
                       {feature.title}
                     </h3>
-                    <p className="text-gray-400">
+                    
+                    <p className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300">
                       {feature.description}
                     </p>
+                    
+                    {/* Subtle reveal link on hover */}
+                    <div className="mt-5 pt-3 border-t border-white/5 opacity-0 group-hover:opacity-100 transition-all duration-500 flex justify-end">
+                      {index === 0 ? (
+                        <Link href="/agents" className={`flex items-center text-sm font-medium ${feature.iconColor}`}>
+                          <span>Zjistit více</span>
+                          <ArrowRight className="ml-1 w-4 h-4" />
+                        </Link>
+                      ) : index === 1 ? (
+                        <Link href="/prompts" className={`flex items-center text-sm font-medium ${feature.iconColor}`}>
+                          <span>Zjistit více</span>
+                          <ArrowRight className="ml-1 w-4 h-4" />
+                        </Link>
+                      ) : (
+                        <a 
+                          href="#prompt-section" 
+                          className={`flex items-center text-sm font-medium ${feature.iconColor}`}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            document.querySelector('.prompt-section')?.scrollIntoView({ behavior: 'smooth' });
+                          }}
+                        >
+                          <span>Zjistit více</span>
+                          <ArrowRight className="ml-1 w-4 h-4" />
+                        </a>
+                      )}
+                    </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -73,6 +201,15 @@ export default function Home() {
         <FAQ />
         <Contact />
       </main>
+      
+      {/* Add keyframes for animations */}
+      <style jsx global>{`
+        @keyframes pulse {
+          0% { opacity: 0.3; transform: scale(0.97); }
+          50% { opacity: 0.6; transform: scale(1.03); }
+          100% { opacity: 0.3; transform: scale(0.97); }
+        }
+      `}</style>
     </div>
   );
 }

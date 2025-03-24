@@ -1,0 +1,15 @@
+firebase-blog
+├── src
+│   ├── config
+│   │   └── firebase.ts
+│   ├── lib
+│   │   └── data
+│   │       └── blog-posts.ts
+│   ├── types
+│   │   └── blog.ts
+│   └── utils
+│       └── db-helpers.ts
+├── .env
+├── package.json
+├── tsconfig.json
+└── README.md

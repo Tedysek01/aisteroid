@@ -19,9 +19,9 @@ export function Hero() {
             transition={{ duration: 0.5 }}
             className="text-5xl font-bold tracking-tight sm:text-6xl bg-gradient-to-r from-white via-white to-blue-100 bg-clip-text text-transparent"
           >
-            Next-Gen AI Tools
+            AI tě nemá děsit. 
             <br />
-            for the Future
+            Má ti pomoct.
           </motion.h1>
           
           <motion.p
@@ -30,8 +30,11 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="mt-6 text-lg leading-8 text-gray-300"
           >
-            Harness the power of artificial intelligence to transform your workflow. 
-            Our cutting-edge AI tools help you achieve more in less time.
+            Vyber si nástroj, klikni – a nech AI pracovat za tebe.
+            <br />
+            Všechno je připravené a ty si můžeš klidně jen hrát.
+
+
           </motion.p>
           
           <motion.div
@@ -42,15 +45,17 @@ export function Hero() {
           >
             <Link
               href="/agents"
-              className="group relative inline-flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold shadow-lg shadow-blue-500/25 hover:shadow-blue-500/50 transition-all duration-300"
+              className="group relative inline-flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold shadow-lg shadow-blue-500/25 hover:shadow-blue-500/50 transition-all duration-300 overflow-hidden"
             >
-              Get Started
-              <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" />
+              <span className="relative z-10 flex items-center gap-2">
+                Začít používat
+                <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" />
+              </span>
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
             </Link>
             
             <Link href="/blog" className="text-sm font-semibold leading-6 text-white hover:text-blue-400 transition-colors duration-300">
-              Learn more <span aria-hidden="true">→</span>
+              Více informací <span aria-hidden="true">→</span>
             </Link>
           </motion.div>
         </div>

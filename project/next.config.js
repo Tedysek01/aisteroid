@@ -1,8 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',  // Enable static exports
   images: { 
-    unoptimized: true,  // Required for static export
+    // unoptimized: true,  // Není potřeba pro serverové renderování
     remotePatterns: [
       {
         protocol: 'https',
@@ -10,7 +9,7 @@ const nextConfig = {
       },
     ],
   },
-  trailingSlash: true,
+  // trailingSlash: true,  // Není potřeba pro serverové renderování
 };
 
 module.exports = nextConfig;

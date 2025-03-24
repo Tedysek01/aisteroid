@@ -5,9 +5,20 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import type { BlogPost } from "@/lib/data/blog-posts";
+import { PromptService, Prompt } from "@/lib/services/prompt-service";
 
-const industries = ["Marketing", "Development", "Legal", "Education", "Business", "Healthcare"];
+const promptCategories = [
+  "Práce a produktivita",
+  "Copywriting a marketing",
+  "SEO a obsah",
+  "E-commerce a podnikání",
+  "Strategie a plánování",
+  "Osobní rozvoj",
+  "Komunikace",
+  "Vývoj a technologie",
+  "Vzdělávání",
+  "Kreativita a zábava"
+];
 
 export function AddPromptForm() {
   const [formData, setFormData] = useState({
@@ -17,59 +28,43 @@ export function AddPromptForm() {
     promptText: "",
     slug: ""
   });
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
     
-    // Store prompt in local array
-    const prompts = JSON.parse(localStorage.getItem("prompts") || "[]");
-    prompts.push({ ...formData, id: Date.now() });
-    localStorage.setItem("prompts", JSON.stringify(prompts));
-    
-    // Create blog post from prompt
-    const blogPost: BlogPost = {
-      id: formData.slug || String(Date.now()),
-      title: formData.title,
-      excerpt: formData.description,
-      content: `
-        <div class="space-y-6">
-          <p>${formData.description}</p>
-          
-          <div class="bg-gray-800 rounded-lg p-6">
-            <h3 class="text-lg font-semibold mb-4">Prompt Template</h3>
-            <pre class="whitespace-pre-wrap">${formData.promptText}</pre>
-          </div>
-          
-          <div class="flex items-center gap-2">
-            <span class="px-3 py-1 rounded-full bg-blue-500/10 text-blue-400">
-              ${formData.industry}
-            </span>
-          </div>
-        </div>
-      `,
-      date: new Date().toISOString().split('T')[0],
-      readTime: "3 min read",
-      author: "AI Prompt Team",
-      coverImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995",
-      status: 'published',
-      tags: [formData.industry]
-    };
-
-    // Store blog post
-    const blogPosts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
-    blogPosts.push(blogPost);
-    localStorage.setItem("blogPosts", JSON.stringify(blogPosts));
-    
-    // Reset form
-    setFormData({
-      title: "",
-      industry: "",
-      description: "",
-      promptText: "",
-      slug: ""
-    });
-    
-    alert("Prompt and blog post saved successfully!");
+    try {
+      // Vytvořit prompt v Firebase
+      const prompt: Prompt = {
+        id: formData.slug || String(Date.now()),
+        title: formData.title,
+        industry: formData.industry,
+        description: formData.description,
+        promptText: formData.promptText,
+        slug: formData.slug
+      };
+      
+      const promptId = await PromptService.createPrompt(prompt);
+      console.log("Prompt uložen do Firebase s ID:", promptId);
+      
+      // Reset formuláře
+      setFormData({
+        title: "",
+        industry: "",
+        description: "",
+        promptText: "",
+        slug: ""
+      });
+      
+      alert(`Prompt úspěšně uložen do Firebase!\nPrompt ID: ${promptId}`);
+    } catch (error) {
+      console.error("Chyba při ukládání do Firebase:", error);
+      alert(`Chyba při ukládání do Firebase: ${error instanceof Error ? error.message : 'Neznámá chyba'}`);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,7 +84,7 @@ export function AddPromptForm() {
     <div className="bg-[#1C1C1C] p-6 rounded-lg">
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label className="block text-sm font-medium mb-2">Title</label>
+          <label className="block text-sm font-medium mb-2">Název promptu</label>
           <Input
             value={formData.title}
             onChange={handleTitleChange}
@@ -109,18 +104,22 @@ export function AddPromptForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2">Industry</label>
+          <label className="block text-sm font-medium mb-2">Kategorie</label>
           <Select
             value={formData.industry}
             onValueChange={(value) => setFormData({ ...formData, industry: value })}
           >
             <SelectTrigger className="bg-[#242424] border-[#333]">
-              <SelectValue placeholder="Select industry" />
+              <SelectValue placeholder="Vyberte kategorii" />
             </SelectTrigger>
-            <SelectContent>
-              {industries.map((industry) => (
-                <SelectItem key={industry} value={industry.toLowerCase()}>
-                  {industry}
+            <SelectContent className="bg-[#242424] border-[#333]">
+              {promptCategories.map((category) => (
+                <SelectItem 
+                  key={category} 
+                  value={category}
+                  className="hover:bg-[#333]"
+                >
+                  {category}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -128,7 +127,7 @@ export function AddPromptForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2">Description</label>
+          <label className="block text-sm font-medium mb-2">Popis promptu</label>
           <Textarea
             value={formData.description}
             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -138,7 +137,7 @@ export function AddPromptForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2">Prompt Text</label>
+          <label className="block text-sm font-medium mb-2">Text promptu</label>
           <Textarea
             value={formData.promptText}
             onChange={(e) => setFormData({ ...formData, promptText: e.target.value })}
@@ -148,8 +147,12 @@ export function AddPromptForm() {
           />
         </div>
 
-        <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
-          Save Prompt & Create Blog Post
+        <Button 
+          type="submit" 
+          className="w-full bg-blue-600 hover:bg-blue-700"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Ukládám..." : "Uložit prompt"}
         </Button>
       </form>
     </div>

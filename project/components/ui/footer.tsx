@@ -1,15 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Settings } from "lucide-react";
 
 export function Footer() {
   const [showAdminButton, setShowAdminButton] = useState(false);
-  const [clickCount, setClickCount] = useState(0);
-  const [lastClickTime, setLastClickTime] = useState(0);
+  const [secretProgress, setSecretProgress] = useState<string[]>([]);
   const router = useRouter();
+  
+  // Reference pro sledování kliknutí
+  const clickTimesRef = useRef<number[]>([]);
+  const longPressTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const secretCode = ['double', 'triple', 'hold', 'double'];
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -19,45 +24,127 @@ export function Footer() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Sledovat tajný kód
+  useEffect(() => {
+    console.log("Tajný postup:", secretProgress);
+    
+    if (secretProgress.length > 0 && secretProgress.length === secretCode.length) {
+      const isCorrect = secretProgress.every((action, index) => action === secretCode[index]);
+      
+      if (isCorrect) {
+        router.push("/admin/dashboard");
+        setSecretProgress([]);
+      } else {
+        // Resetovat při špatném pokusu
+        setSecretProgress([]);
+      }
+    }
+    
+    // Resetovat postup po 3 sekundách nečinnosti
+    const resetTimer = setTimeout(() => {
+      if (secretProgress.length > 0) {
+        setSecretProgress([]);
+        clickTimesRef.current = [];
+      }
+    }, 3000);
+    
+    return () => clearTimeout(resetTimer);
+  }, [secretProgress, router]);
+
+  // Jednodušší detekce kombinací
   const handleClick = () => {
     const now = Date.now();
-    if (now - lastClickTime > 500) {
-      // Reset if more than 500ms between clicks
-      setClickCount(1);
-    } else {
-      setClickCount(prev => prev + 1);
+    clickTimesRef.current.push(now);
+    
+    // Uchovávat pouze posledních 5 kliknutí
+    if (clickTimesRef.current.length > 5) {
+      clickTimesRef.current = clickTimesRef.current.slice(-5);
     }
-    setLastClickTime(now);
-
-    // Check for double-click followed by single-click pattern
-    if (clickCount === 2) {
-      router.push("/admin");
-      setClickCount(0);
+    
+    // Detekce dvojkliku - dvě kliknutí v intervalu < 300ms
+    if (clickTimesRef.current.length >= 2) {
+      const lastTwo = clickTimesRef.current.slice(-2);
+      if (lastTwo[1] - lastTwo[0] < 300) {
+        // Kontrola správné sekvence
+        const expectedNextAction = secretCode[secretProgress.length];
+        
+        // Přidat dvojklik pouze pokud na něj čekáme v sekvenci
+        if (expectedNextAction === 'double') {
+          setSecretProgress(prev => [...prev, 'double']);
+        }
+      }
+    }
+    
+    // Detekce trojkliku - tři kliknutí, kde každé je od předchozího < 300ms
+    if (clickTimesRef.current.length >= 3) {
+      const lastThree = clickTimesRef.current.slice(-3);
+      if (lastThree[1] - lastThree[0] < 300 && lastThree[2] - lastThree[1] < 300) {
+        // Kontrola, zda trojklik nebyl již zaznamenán
+        const lastAction = secretProgress[secretProgress.length - 1];
+        const expectedNextAction = secretCode[secretProgress.length];
+        
+        // Přidat trojklik pouze pokud na něj čekáme v sekvenci a není již zaznamenán
+        if (expectedNextAction === 'triple' && lastAction !== 'triple') {
+          setSecretProgress(prev => [...prev, 'triple']);
+        }
+      }
+    }
+  };
+  
+  // Dlouhý stisk
+  const handleMouseDown = () => {
+    // Zrušit jakýkoliv předchozí timer
+    if (longPressTimerRef.current) {
+      clearTimeout(longPressTimerRef.current);
+    }
+    
+    // Nastavit nový timer pro dlouhý stisk
+    longPressTimerRef.current = setTimeout(() => {
+      // Kontrola správné sekvence
+      const expectedNextAction = secretCode[secretProgress.length];
+      
+      // Přidat dlouhý stisk pouze pokud na něj čekáme v sekvenci
+      if (expectedNextAction === 'hold') {
+        setSecretProgress(prev => [...prev, 'hold']);
+      }
+      
+      longPressTimerRef.current = null;
+    }, 800);
+  };
+  
+  const handleMouseUp = () => {
+    // Zrušit timer dlouhého stisku
+    if (longPressTimerRef.current) {
+      clearTimeout(longPressTimerRef.current);
+      longPressTimerRef.current = null;
     }
   };
 
   return (
-    <footer className="bg-[#1C1C1C] py-12">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className="bg-[#121212] border-t border-white/10 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           <div>
-            <h3 className="text-lg font-semibold mb-4">About</h3>
+            <h3 className="text-lg font-semibold mb-4">O nás</h3>
             <p className="text-gray-400">
-              Empowering your workflow with next-generation AI tools and solutions.
+            Pomáháme lidem používat AI smysluplně – bez složitostí, bez keců.
+Dáváme ti do ruky nástroje, které ti šetří čas a fakt něco dělají.
+
+
             </p>
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <h3 className="text-lg font-semibold mb-4">Rychlé odkazy</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/agents" className="text-gray-400 hover:text-white transition-colors">
-                  AI Agents
+                  AI Agenti
                 </Link>
               </li>
               <li>
                 <Link href="/prompts" className="text-gray-400 hover:text-white transition-colors">
-                  Prompts
+                  Prompty
                 </Link>
               </li>
               <li>
@@ -65,15 +152,20 @@ export function Footer() {
                   Blog
                 </Link>
               </li>
+              <li>
+                <Link href="/kontakt" className="text-gray-400 hover:text-white transition-colors">
+                  Kontakt
+                </Link>
+              </li>
             </ul>
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold mb-4">Resources</h3>
+            <h3 className="text-lg font-semibold mb-4">Zdroje</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/docs" className="text-gray-400 hover:text-white transition-colors">
-                  Documentation
+                  Dokumentace
                 </Link>
               </li>
               <li>
@@ -85,26 +177,39 @@ export function Footer() {
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold mb-4">Contact</h3>
-            <p className="text-gray-400">
-              Questions? Reach out to our support team.
+            <h3 className="text-lg font-semibold mb-4">Kontakt</h3>
+            <p className="text-gray-400 mb-2">
+              Máte otázky? Obraťte se na náš tým podpory.
             </p>
+            <Link href="/kontakt" className="text-blue-400 hover:text-blue-300 transition-colors">
+              Kontaktujte nás
+            </Link>
           </div>
-        </div>
-        
-        <div className="mt-12 pt-8 border-t border-white/10 flex justify-between items-center">
-          <p className="text-gray-400">
-            © 2025 AI Tools & Agents. All rights reserved.
-          </p>
+          
           {showAdminButton && (
             <button
+              id="admin-secret-button"
+              className="w-8 h-8 fixed bottom-4 right-4 opacity-40 hover:opacity-80 transition-opacity z-50"
               onClick={handleClick}
-              className="w-6 h-6 opacity-20 hover:opacity-40 transition-opacity"
-              aria-label="Site Options"
-              tabIndex={-1}
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseUp}
+              aria-label="Admin přístup"
             >
-              <Settings className="w-full h-full text-gray-500" />
+              <Settings className="w-full h-full text-gray-400" />
             </button>
+          )}
+          
+          {/* Indikátor postupu */}
+          {secretProgress.length > 0 && (
+            <div className="fixed bottom-4 left-4 bg-black/70 text-xs p-2 rounded text-white opacity-60 z-50">
+              {secretProgress.map((action, i) => (
+                <span key={i} className={`inline-block w-3 h-3 mx-1 rounded-full ${
+                  action === 'double' ? 'bg-blue-500' : 
+                  action === 'triple' ? 'bg-green-500' : 'bg-red-500'
+                }`}/>
+              ))}
+            </div>
           )}
         </div>
       </div>

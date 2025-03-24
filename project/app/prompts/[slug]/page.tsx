@@ -1,13 +1,38 @@
-import { prompts } from "@/lib/data/prompts";
-import { PromptDetails } from "./prompt-details";
+"use client";
 
-export function generateStaticParams() {
-  return prompts.map((prompt) => ({
-    slug: prompt.id,
-  }));
-}
+import { useState, useEffect } from "react";
+import { PromptDetails } from "./prompt-details";
+import { PromptService } from "@/lib/services/prompt-service";
+import type { Prompt } from "@/lib/services/prompt-service";
 
 export default function PromptPage({ params }: { params: { slug: string } }) {
-  const prompt = prompts.find(p => p.id === params.slug);
+  const [prompt, setPrompt] = useState<Prompt | undefined>(undefined);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPrompt = async () => {
+      try {
+        setLoading(true);
+        const promptData = await PromptService.getPromptBySlug(params.slug);
+        setPrompt(promptData || undefined);
+      } catch (error) {
+        console.error("Chyba při načítání promptu:", error);
+        setPrompt(undefined);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPrompt();
+  }, [params.slug]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#121212] text-white flex items-center justify-center">
+        <div className="animate-pulse text-2xl">Načítám prompt...</div>
+      </div>
+    );
+  }
+
   return <PromptDetails prompt={prompt} />;
 }

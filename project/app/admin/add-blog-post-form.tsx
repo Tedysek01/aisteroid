@@ -15,7 +15,7 @@ import TextAlign from '@tiptap/extension-text-align';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import Select from 'react-select';
+import CreatableSelect from 'react-select/creatable';
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
@@ -23,6 +23,7 @@ import { cn } from "@/lib/utils";
 import { CalendarIcon, Bold, Italic, Underline as UnderlineIcon, List, ListOrdered, AlignLeft, AlignCenter, AlignRight, Link as LinkIcon, Table as TableIcon, Image as ImageIcon, Eye, Save } from "lucide-react";
 import type { BlogPost } from "@/lib/data/blog-posts";
 import { BlogService } from "@/lib/services/blog-service";
+import Select from 'react-select';
 
 interface Tag {
   value: string;
@@ -119,26 +120,32 @@ export function AddBlogPostForm() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const blogPost: BlogPost = {
-      id: formData.slug || String(Date.now()),
-      title: formData.title,
-      excerpt: formData.excerpt,
-      content: editor?.getHTML() || "",
-      date: format(formData.publishDate, "yyyy-MM-dd"),
-      readTime: "5 min read",
-      author: "Admin",
-      coverImage: formData.featuredImagePreview || "https://images.unsplash.com/photo-1677442136019-21780ecad995",
-      status: formData.status as 'draft' | 'published',
-      tags: formData.tags.map(tag => tag.value),
-      seoTitle: formData.seoTitle,
-      seoDescription: formData.seoDescription
-    };
-
     try {
-      BlogService.createPost(blogPost);
+      console.log('Form submission started');
+      
+      const blogPost: BlogPost = {
+        id: formData.slug,
+        title: formData.title,
+        excerpt: formData.excerpt,
+        content: editor?.getHTML() || "",
+        date: format(formData.publishDate, "yyyy-MM-dd"),
+        readTime: "5 min read",
+        author: "Admin",
+        coverImage: formData.featuredImagePreview || "https://images.unsplash.com/photo-1677442136019-21780ecad995",
+        status: formData.status as 'draft' | 'published',
+        tags: formData.tags.map(tag => tag.value),
+        seoTitle: formData.seoTitle,
+        seoDescription: formData.seoDescription
+      };
+
+      console.log('Blog post data prepared:', blogPost);
+
+      const postId = await BlogService.createPost(blogPost);
+      console.log('Post created successfully with ID:', postId);
+      console.log('Post URL:', `/blog/${postId}`);
 
       // Reset form
       setFormData({
@@ -154,11 +161,12 @@ export function AddBlogPostForm() {
         featuredImage: null,
         featuredImagePreview: "",
       });
+      
       editor?.commands.setContent("");
-
-      alert("Blog post saved successfully!");
+      alert(`Příspěvek byl úspěšně uložen do Firebase! ID: ${postId}\nURL: /blog/${postId}`);
     } catch (error) {
-      alert("Error saving blog post. Please try again.");
+      console.error('Form submission error:', error);
+      alert(`Chyba při ukládání příspěvku do Firebase: ${error instanceof Error ? error.message : 'Neznámá chyba'}`);
     }
   };
 
@@ -229,11 +237,13 @@ export function AddBlogPostForm() {
 
         <div>
           <label className="block text-sm font-medium mb-2">Tags</label>
-          <Select
+          <CreatableSelect
             isMulti
             options={popularTags}
             value={formData.tags}
             onChange={(newValue) => setFormData(prev => ({ ...prev, tags: newValue as Tag[] }))}
+            placeholder="Zadej nebo vyber tagy..."
+            formatCreateLabel={(inputValue) => `Přidat "${inputValue}"`}
             className="react-select-container"
             classNamePrefix="react-select"
             styles={{
@@ -269,8 +279,24 @@ export function AddBlogPostForm() {
                 '&:hover': {
                   backgroundColor: '#444'
                 }
+              }),
+              input: (base) => ({
+                ...base,
+                color: 'white !important'
+              }),
+              placeholder: (base) => ({
+                ...base,
+                color: 'rgba(255, 255, 255, 0.5)'
               })
             }}
+            theme={(theme) => ({
+              ...theme,
+              colors: {
+                ...theme.colors,
+                neutral80: 'white',
+                neutral60: 'white',
+              },
+            })}
           />
         </div>
 
@@ -385,9 +411,18 @@ export function AddBlogPostForm() {
               <EditorContent editor={editor} className="p-4 bg-[#242424]" />
             </div>
           ) : (
-            <div className="prose prose-invert max-w-none p-4 bg-[#242424] rounded-lg border border-[#333]">
-              {editor?.getHTML()}
-            </div>
+            <div 
+              className="prose prose-invert max-w-none 
+                prose-headings:text-white 
+                prose-h3:text-xl prose-h3:font-bold prose-h3:mt-8 prose-h3:mb-4
+                prose-h4:text-lg prose-h4:font-semibold prose-h4:mt-6 prose-h4:mb-3
+                prose-p:my-4 
+                prose-ul:list-disc prose-ul:pl-5 
+                prose-li:my-2
+                prose-blockquote:border-l-4 prose-blockquote:border-blue-400 prose-blockquote:pl-4 prose-blockquote:italic
+                prose-strong:font-bold prose-strong:text-white"
+              dangerouslySetInnerHTML={{ __html: formData.content }}
+            />
           )}
         </div>
 

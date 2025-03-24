@@ -17,7 +17,8 @@ export function LoginForm({ onLogin }: LoginFormProps) {
     e.preventDefault();
     setError("");
     
-    if (email === "tadeas@raska.eu" && password === "741258963_Aa") {
+    // Používáme jednoduché testovací heslo
+    if (email === "admin@example.com" && password === "admin123") {
       onLogin(email, password);
     } else {
       setError("Invalid credentials");

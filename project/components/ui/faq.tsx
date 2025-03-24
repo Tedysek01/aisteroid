@@ -6,20 +6,36 @@ import { useState } from "react";
 
 const faqs = [
   {
-    question: "What makes your AI tools different?",
-    answer: "Our AI tools are built on state-of-the-art models and are specifically designed for maximum efficiency and ease of use. We focus on delivering practical solutions that integrate seamlessly into your workflow."
+    question: "Je Aisteroid zdarma?",
+    answer: "Ano! Všechny prompty, agenti i návody jsou aktuálně dostupné zdarma. Pokud bys chtěl něco speciálního na míru, třeba agenta nebo prompt pro tvůj projekt, ozvi se – to už může být placené."
   },
   {
-    question: "How secure is my data?",
-    answer: "We implement enterprise-grade security measures to protect your data. All information is encrypted both in transit and at rest, and we follow strict data privacy guidelines."
+    question: "Co když AI vůbec nerozumím?",
+    answer: "V pohodě. Aisteroid je dělaný tak, aby ti pomohl pochopit a využít AI i bez technických znalostí. Najdeš tu hotové nástroje, vysvětlení, i videonávody krok za krokem. AI nemusí být složitá – jen musíš vědět, kde začít."
   },
   {
-    question: "Can I customize the AI agents?",
-    answer: "Yes, our AI agents can be customized to match your specific needs and preferences. You can adjust parameters, set custom rules, and train them on your specific use cases."
+    question: "Jaké typy agentů tu najdu?",
+    answer: "Většina agentů řeší reálné, každodenní úkoly – od shrnutí e-mailů až po monitoring recenzí nebo automatické odpovědi. Každý agent má vlastní detailní stránku, kde najdeš i video, jak ho vytvořit."
   },
   {
-    question: "What kind of support do you offer?",
-    answer: "We provide comprehensive support including detailed documentation, video tutorials, and dedicated customer service. Premium users also get access to priority support."
+    question: "Jak fungují prompty na Aisteroidu?",
+    answer: "Všechny prompty jsou připravené tak, aby dávaly smysl i běžnému uživateli. Žádné generické 'napiš článek'. Každý prompt má jasný účel, místo na doplnění a často i návod k použití."
+  },
+  {
+    question: "Můžu tě nějak kontaktovat?",
+    answer: "Jasně! Můžeš napsat na e-mail tadeas@raska.eu, zavolat na 608 404 401 nebo mě najdeš i na Instagramu, Facebooku nebo Telegramu. Když mi napíšeš, odepíšu. Jsem člověk, ne další chatbot."
+  },
+  {
+    question: "Bude v budoucnu placený obsah?",
+    answer: "Možná. Pokud bude velký zájem a už to nepůjde stíhat zdarma, přidám třeba prémiové členství nebo paywall na vybrané věci. Ale teď si všechno užij volně."
+  },
+  {
+    question: "Chystáš i komunitu?",
+    answer: "Jo! Až nás bude víc, spustím komunitu na Discordu nebo Telegramu. Místo, kde budeme sdílet agenty, tipy a AI nápady. Sleduj novinky – přijdou brzy."
+  },
+  {
+    question: "Kde najdu návody, jak agenta vytvořit?",
+    answer: "U každého agenta na webu najdeš i video s návodem, jak si ho krok za krokem postavit třeba v n8n. Můžeš jet podle videa, nebo si jen stáhnout JSON a importnout ho rovnou."
   }
 ];
 
@@ -52,7 +68,7 @@ export function FAQ() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-4xl font-bold mb-4 bg-gradient-to-r from-white via-white to-purple-100 bg-clip-text text-transparent"
           >
-            Frequently Asked Questions
+            Často kladené otázky
           </motion.h2>
           
           <motion.p
@@ -62,7 +78,7 @@ export function FAQ() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-gray-400 max-w-2xl mx-auto"
           >
-            Find answers to common questions about our AI tools and services.
+            Najděte odpovědi na běžné dotazy o našich AI nástrojích a službách.
           </motion.p>
         </div>
 

@@ -2,16 +2,16 @@
 
 import { Tag, ArrowLeft, Code } from "lucide-react";
 import Link from "next/link";
-import type { Prompt } from "@/lib/data/prompts";
+import type { Prompt } from "@/lib/services/prompt-service";
 
 export function PromptDetails({ prompt }: { prompt: Prompt | undefined }) {
   if (!prompt) {
     return (
       <div className="min-h-screen bg-[#121212] text-white flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">Prompt not found</h1>
+          <h1 className="text-4xl font-bold mb-4">Hledaný prompt jsme nenašli</h1>
           <Link href="/prompts" className="text-blue-400 hover:text-blue-300">
-            View all prompts
+            Prozkoumat všechny dostupné prompty
           </Link>
         </div>
       </div>
@@ -24,34 +24,41 @@ export function PromptDetails({ prompt }: { prompt: Prompt | undefined }) {
         <div className="mb-8">
           <Link href="/prompts" className="text-blue-400 hover:text-blue-300 flex items-center gap-2">
             <ArrowLeft size={20} />
-            Back to prompts
+            Zpět na přehled promptů
           </Link>
         </div>
 
-        <div className="bg-white/5 backdrop-blur-lg rounded-xl p-8 border border-white/10">
-          <div className="flex items-center gap-3 mb-6">
-            <span className="px-3 py-1 rounded-full text-sm bg-white/10 flex items-center gap-1">
-              <Tag size={12} />
-              <span className="capitalize">{prompt.category}</span>
-            </span>
-          </div>
+        <div className="p-[2px] rounded-2xl bg-gradient-to-r from-blue-500/50 via-purple-500/50 to-pink-500/50 shadow-[0_10px_50px_rgba(0,0,0,0.5)] shadow-blue-900/20">
+          <div className="bg-[#1a1a1a]/90 backdrop-blur-lg rounded-2xl p-8 h-full">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="px-3 py-1 rounded-full text-sm bg-white/10 flex items-center gap-1">
+                <Tag size={12} />
+                <span className="capitalize">{prompt.industry}</span>
+              </span>
+            </div>
 
-          <h1 className="text-4xl font-bold mb-6">{prompt.title}</h1>
-          
-          <div className="prose prose-invert max-w-none">
-            <p className="text-xl text-gray-300 mb-8">{prompt.description}</p>
+            <h1 className="text-4xl font-bold mb-6">{prompt.title}</h1>
             
-            <h2 className="text-2xl font-semibold mb-4">Full Description</h2>
-            <p className="mb-8">{prompt.fullDescription}</p>
-
-            <h2 className="text-2xl font-semibold mb-4">Example Usage</h2>
-            <div className="bg-black/30 rounded-lg p-6 mb-8">
-              {prompt.examples?.map((example, index) => (
-                <div key={index} className="flex items-start gap-3 mb-4 last:mb-0">
-                  <Code size={20} className="mt-1" />
-                  <p className="text-gray-300">{example}</p>
-                </div>
-              ))}
+            <div className="prose prose-invert max-w-none">
+              <p className="text-xl text-gray-300 mb-8">{prompt.description}</p>
+              
+              <h2 className="text-2xl font-semibold mb-4">Jak tento prompt použít</h2>
+              <div className="bg-black/30 rounded-lg p-6 mb-8 overflow-auto max-h-[600px]">
+                <pre className="text-gray-300 whitespace-pre-wrap break-words overflow-hidden">{prompt.promptText}</pre>
+              </div>
+              
+              <div className="mt-10">
+                <h2 className="text-2xl font-semibold mb-4">Získejte maximum z tohoto promptu</h2>
+                <p className="mb-4">
+                  Zkopírujte výše uvedený text a vložte jej přímo do svého oblíbeného AI nástroje. 
+                  Prompt je připraven k okamžitému použití - stačí jej vložit a získat výsledky, 
+                  které potřebujete.
+                </p>
+                <p className="mb-4">
+                  Pro ještě lepší výsledky můžete prompt upravit podle svých specifických potřeb 
+                  nebo jej kombinovat s dalšími prompty z naší rozsáhlé knihovny.
+                </p>
+              </div>
             </div>
           </div>
         </div>

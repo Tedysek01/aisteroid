@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { AgentService, Agent } from "@/lib/services/agent-service";
 
 export function AddAgentForm() {
   const [formData, setFormData] = useState({
@@ -14,24 +15,57 @@ export function AddAgentForm() {
     fullDescription: "",
     youtubeUrl: ""
   });
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Store in local array
-    const agents = JSON.parse(localStorage.getItem("agents") || "[]");
-    agents.push({ ...formData, id: Date.now() });
-    localStorage.setItem("agents", JSON.stringify(agents));
+    setIsSubmitting(true);
     
-    // Reset form
+    try {
+      const agent: Agent = {
+        id: formData.slug || String(Date.now()),
+        name: formData.name,
+        slug: formData.slug,
+        category: formData.category,
+        shortDescription: formData.shortDescription,
+        fullDescription: formData.fullDescription,
+        youtubeUrl: formData.youtubeUrl || undefined
+      };
+      
+      const agentId = await AgentService.createAgent(agent);
+      console.log("Agent uložen do Firebase s ID:", agentId);
+      
+      // Reset formuláře
+      setFormData({
+        name: "",
+        slug: "",
+        category: "",
+        shortDescription: "",
+        fullDescription: "",
+        youtubeUrl: ""
+      });
+      
+      alert(`Agent úspěšně uložen do Firebase! ID: ${agentId}`);
+    } catch (error) {
+      console.error("Chyba při ukládání agenta do Firebase:", error);
+      alert(`Chyba při ukládání agenta: ${error instanceof Error ? error.message : 'Neznámá chyba'}`);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+  
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.value;
+    const slug = name.toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+    
     setFormData({
-      name: "",
-      slug: "",
-      category: "",
-      shortDescription: "",
-      fullDescription: "",
-      youtubeUrl: ""
+      ...formData,
+      name,
+      slug
     });
-    alert("Agent saved successfully!");
   };
 
   return (
@@ -41,7 +75,7 @@ export function AddAgentForm() {
           <label className="block text-sm font-medium mb-2">Name</label>
           <Input
             value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            onChange={handleNameChange}
             className="bg-[#242424] border-[#333]"
             required
           />
@@ -99,8 +133,12 @@ export function AddAgentForm() {
           />
         </div>
 
-        <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
-          Save Agent
+        <Button 
+          type="submit" 
+          className="w-full bg-blue-600 hover:bg-blue-700"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Ukládám..." : "Uložit agenta"}
         </Button>
       </form>
     </div>
