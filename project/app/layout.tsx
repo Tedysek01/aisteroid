@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Syne } from 'next/font/google';
 import { Navbar } from '@/components/ui/navbar';
 import { Footer } from '@/components/ui/footer';
+import { Analytics } from '@vercel/analytics/react';
 
 const syne = Syne({ subsets: ['latin'] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
           {children}
         </div>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );

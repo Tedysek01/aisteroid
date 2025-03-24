@@ -2,6 +2,17 @@ import { MetadataRoute } from 'next'
 import { getDb } from '@/lib/firebase/config'
 import { collection, getDocs } from 'firebase/firestore'
 
+// Pomocná funkce pro bezpečné získání data
+const getValidDate = (dateValue: any): Date => {
+  if (!dateValue) return new Date()
+  try {
+    const date = dateValue instanceof Date ? dateValue : new Date(dateValue)
+    return isNaN(date.getTime()) ? new Date() : date
+  } catch {
+    return new Date()
+  }
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const db = getDb()
   if (!db) {
@@ -12,21 +23,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const blogPostsSnapshot = await getDocs(collection(db, 'blog_posts'))
   const blogPosts = blogPostsSnapshot.docs.map(doc => ({
     slug: doc.data().slug,
-    updated_at: doc.data().updated_at
+    updated_at: getValidDate(doc.data().updated_at)
   }))
   
   // Získání všech agentů
   const agentsSnapshot = await getDocs(collection(db, 'agents'))
   const agents = agentsSnapshot.docs.map(doc => ({
     slug: doc.data().slug,
-    updated_at: doc.data().updated_at
+    updated_at: getValidDate(doc.data().updated_at)
   }))
   
   // Získání všech promptů
   const promptsSnapshot = await getDocs(collection(db, 'prompts'))
   const prompts = promptsSnapshot.docs.map(doc => ({
     slug: doc.data().slug,
-    updated_at: doc.data().updated_at
+    updated_at: getValidDate(doc.data().updated_at)
   }))
 
   // Základní statické stránky
@@ -66,7 +77,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Generování URL pro blogové příspěvky
   const blogUrls = blogPosts.map(post => ({
     url: `https://aisteroid.cz/blog/${post.slug}`,
-    lastModified: new Date(post.updated_at),
+    lastModified: post.updated_at,
     changeFrequency: 'weekly' as const,
     priority: 0.6,
   }))
@@ -74,7 +85,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Generování URL pro agenty
   const agentUrls = agents.map(agent => ({
     url: `https://aisteroid.cz/agents/${agent.slug}`,
-    lastModified: new Date(agent.updated_at),
+    lastModified: agent.updated_at,
     changeFrequency: 'weekly' as const,
     priority: 0.6,
   }))
@@ -82,7 +93,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Generování URL pro prompty
   const promptUrls = prompts.map(prompt => ({
     url: `https://aisteroid.cz/prompts/${prompt.slug}`,
-    lastModified: new Date(prompt.updated_at),
+    lastModified: prompt.updated_at,
     changeFrequency: 'weekly' as const,
     priority: 0.6,
   }))
