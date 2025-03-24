@@ -1,26 +1,33 @@
 import { MetadataRoute } from 'next'
-import { createClient } from '@supabase/supabase-js'
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
+import { getDb } from '@/lib/firebase/config'
+import { collection, getDocs } from 'firebase/firestore'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const db = getDb()
+  if (!db) {
+    throw new Error('Firebase není inicializován')
+  }
+
   // Získání všech blogových příspěvků
-  const { data: blogPosts } = await supabase
-    .from('blog_posts')
-    .select('slug, updated_at')
+  const blogPostsSnapshot = await getDocs(collection(db, 'blog_posts'))
+  const blogPosts = blogPostsSnapshot.docs.map(doc => ({
+    slug: doc.data().slug,
+    updated_at: doc.data().updated_at
+  }))
   
   // Získání všech agentů
-  const { data: agents } = await supabase
-    .from('agents')
-    .select('slug, updated_at')
+  const agentsSnapshot = await getDocs(collection(db, 'agents'))
+  const agents = agentsSnapshot.docs.map(doc => ({
+    slug: doc.data().slug,
+    updated_at: doc.data().updated_at
+  }))
   
   // Získání všech promptů
-  const { data: prompts } = await supabase
-    .from('prompts')
-    .select('slug, updated_at')
+  const promptsSnapshot = await getDocs(collection(db, 'prompts'))
+  const prompts = promptsSnapshot.docs.map(doc => ({
+    slug: doc.data().slug,
+    updated_at: doc.data().updated_at
+  }))
 
   // Základní statické stránky
   const staticPages = [
@@ -57,28 +64,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]
 
   // Generování URL pro blogové příspěvky
-  const blogUrls = blogPosts?.map(post => ({
+  const blogUrls = blogPosts.map(post => ({
     url: `https://aisteroid.cz/blog/${post.slug}`,
     lastModified: new Date(post.updated_at),
     changeFrequency: 'weekly' as const,
     priority: 0.6,
-  })) || []
+  }))
 
   // Generování URL pro agenty
-  const agentUrls = agents?.map(agent => ({
+  const agentUrls = agents.map(agent => ({
     url: `https://aisteroid.cz/agents/${agent.slug}`,
     lastModified: new Date(agent.updated_at),
     changeFrequency: 'weekly' as const,
     priority: 0.6,
-  })) || []
+  }))
 
   // Generování URL pro prompty
-  const promptUrls = prompts?.map(prompt => ({
+  const promptUrls = prompts.map(prompt => ({
     url: `https://aisteroid.cz/prompts/${prompt.slug}`,
     lastModified: new Date(prompt.updated_at),
     changeFrequency: 'weekly' as const,
     priority: 0.6,
-  })) || []
+  }))
 
   return [...staticPages, ...blogUrls, ...agentUrls, ...promptUrls]
 } 
