@@ -130,20 +130,20 @@ export default function PromptsPage() {
     : prompts;
 
   return (
-    <div className="min-h-screen bg-[#121212] text-white">
+    <div className="min-h-screen bg-[#0a0a0a] text-white">
       <main className="max-w-7xl mx-auto px-6 py-24">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
-          <h1 className="text-5xl font-bold">Prompty</h1>
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-pink-400 via-white to-purple-400 bg-clip-text text-transparent">Prompty</h1>
           
           {!isLoading && categories.length > 0 && (
             <div className="flex items-center gap-4">
-              <Filter size={20} />
+              <Filter size={20} className="text-pink-400" />
               <div className="flex flex-wrap gap-2">
                 <button
                   onClick={() => setSelectedCategory(null)}
                   className={`px-4 py-2 rounded-lg transition-all duration-300 ${
                     !selectedCategory
-                      ? "bg-blue-500 text-white"
+                      ? "bg-pink-500 text-white"
                       : "bg-white/10 hover:bg-white/20"
                   }`}
                 >
@@ -155,7 +155,7 @@ export default function PromptsPage() {
                     onClick={() => setSelectedCategory(category)}
                     className={`px-4 py-2 rounded-lg transition-all duration-300 ${
                       selectedCategory === category
-                        ? "bg-blue-500 text-white"
+                        ? "bg-pink-500 text-white"
                         : "bg-white/10 hover:bg-white/20"
                     }`}
                   >
@@ -184,14 +184,14 @@ export default function PromptsPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className="relative overflow-hidden rounded-xl p-6 border border-white/10 hover:border-white/20 transition-all duration-500 group h-full"
+                  className="relative overflow-hidden rounded-xl p-6 border border-pink-500/10 hover:border-pink-500/20 transition-all duration-500 group h-full"
                   style={{
-                    background: "linear-gradient(145deg, rgba(18, 18, 18, 0.9), rgba(30, 30, 30, 0.6))",
+                    background: "linear-gradient(145deg, rgba(10, 10, 10, 0.9), rgba(20, 20, 20, 0.6))",
                     backdropFilter: "blur(12px)",
                     boxShadow: `0 0 25px rgba(0, 0, 0, 0.5)`
                   }}
                 >
-                  {/* Futuristický cyberpunk podklad karty */}
+                  {/* Pink background effects */}
                   <div className="absolute inset-0 z-0 opacity-10 overflow-hidden">
                     <div className={`absolute inset-0 bg-gradient-to-br ${colorScheme.gradient} opacity-20`} />
                     <div className="absolute inset-0 opacity-30" 
@@ -204,12 +204,12 @@ export default function PromptsPage() {
                   
                   {/* Horizontální linie na vrcholu karty */}
                   <div 
-                    className={`absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-${colorScheme.accent}/50 to-transparent group-hover:via-${colorScheme.lightAccent}/80 transition-all duration-700`}
+                    className={`absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-pink-500/50 to-transparent group-hover:via-pink-400/80 transition-all duration-700`}
                   />
                   
                   {/* Vertikální linie na pravé straně */}
                   <div 
-                    className={`absolute top-0 right-0 w-[2px] h-full bg-gradient-to-b from-transparent via-${colorScheme.accent}/50 to-transparent group-hover:via-${colorScheme.lightAccent}/80 transition-all duration-700`}
+                    className={`absolute top-0 right-0 w-[2px] h-full bg-gradient-to-b from-transparent via-pink-500/50 to-transparent group-hover:via-pink-400/80 transition-all duration-700`}
                   />
                   
                   {/* Glow efekt při hoveru podle kategorie */}
@@ -220,18 +220,18 @@ export default function PromptsPage() {
                   {/* Kategorie - nový design */}
                   <div className="relative z-10 flex items-center gap-2 mb-6">
                     <span
-                      className={`px-3 py-1 rounded-md text-xs font-medium bg-gradient-to-r ${colorScheme.gradient} bg-opacity-30 flex items-center gap-1 shadow-lg shadow-${colorScheme.accent}/20 border border-white/5`}
+                      className={`px-3 py-1 rounded-md text-xs font-medium bg-gradient-to-r ${colorScheme.gradient} bg-opacity-30 flex items-center gap-1 shadow-lg shadow-pink-500/20 border border-pink-500/5`}
                     >
-                      <Tag size={10} />
-                      <span className="capitalize">{prompt.industry}</span>
+                      <Tag size={10} className="text-pink-400" />
+                      <span className="capitalize text-pink-200">{prompt.industry}</span>
                     </span>
                   </div>
                   
                   <div className="relative z-10">
-                    <h2 className="text-2xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white group-hover:from-white group-hover:via-white group-hover:to-white transition-all duration-500">
+                    <h2 className="text-2xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-pink-100 via-white to-purple-100 group-hover:from-pink-200 group-hover:via-white group-hover:to-purple-200 transition-all duration-500">
                       {prompt.title}
                     </h2>
-                    <p className="text-gray-300 mb-6 group-hover:text-gray-200 transition-colors duration-300">
+                    <p className="text-pink-200/70 mb-6 group-hover:text-pink-200 transition-colors duration-300">
                       {prompt.description}
                     </p>
                     
@@ -248,26 +248,17 @@ export default function PromptsPage() {
                       {/* Animovaný světelný efekt */}
                       <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
                       
-                      {/* Text tlačítka */}
-                      <span className="relative z-10 font-medium text-white flex items-center">
-                        Zobrazit detail
-                        <svg className="w-5 h-5 ml-2 -mr-1 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
+                      <span className="relative z-10 text-white font-medium">
+                        Zobrazit prompt
                       </span>
                     </Link>
                   </div>
-                  
-                  {/* Dekorativní cyberpunk prvky */}
-                  <div className={`absolute bottom-0 left-0 w-[30%] h-[3px] bg-gradient-to-r from-${colorScheme.accent}/80 to-transparent`} />
-                  <div className={`absolute bottom-0 right-[30%] w-[10%] h-[3px] bg-gradient-to-r from-transparent via-${colorScheme.accent}/80 to-transparent`} />
-                  <div className={`absolute top-[20%] right-0 w-[3px] h-[20%] bg-gradient-to-b from-transparent via-${colorScheme.accent}/50 to-transparent`} />
                 </motion.div>
-              )
+              );
             })}
           </div>
         ) : (
-          <div className="text-center py-20 text-gray-400">
+          <div className="text-center py-10 text-pink-200/70">
             Žádné prompty nebyly nalezeny.
           </div>
         )}

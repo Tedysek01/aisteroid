@@ -19,12 +19,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="cs" className="dark">
-      <body className={`${syne.className} bg-[#121212] text-white antialiased`}>
-        <Navbar />
-        <div className="pt-20">
-          {children}
+      <body className={`${syne.className} bg-[#0a0a0a] text-white antialiased`}>
+        <div className="relative min-h-screen">
+          <div className="absolute inset-0 bg-gradient-to-b from-pink-500/5 via-purple-500/5 to-transparent" />
+          <div className="relative">
+            <Navbar />
+            <div className="pt-20">
+              {children}
+            </div>
+            <Footer />
+          </div>
         </div>
-        <Footer />
         <Analytics />
       </body>
     </html>

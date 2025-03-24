@@ -37,8 +37,8 @@ export function PromptCard({
       {/* Grid pattern */}
       <div className="absolute inset-0 rounded-xl opacity-[0.03] overflow-hidden" 
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 170, 255, 0.5) 1px, transparent 1px), 
-                           linear-gradient(90deg, rgba(0, 170, 255, 0.5) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(rgba(236, 72, 153, 0.5) 1px, transparent 1px), 
+                           linear-gradient(90deg, rgba(236, 72, 153, 0.5) 1px, transparent 1px)`,
           backgroundSize: '20px 20px',
           backgroundPosition: 'center'
         }}
@@ -47,7 +47,7 @@ export function PromptCard({
       {/* Digital circuit pattern */}
       <div className="absolute inset-0 rounded-xl opacity-5 overflow-hidden"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230055ff' fill-opacity='0.3'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ec4899' fill-opacity='0.3'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
         }}
       />
       
@@ -81,8 +81,8 @@ export function PromptCard({
             className={`w-14 h-14 relative ${color} flex items-center justify-center rounded-lg transform group-hover:scale-110 transition-transform duration-500 overflow-hidden`}
             style={{
               clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)',
-              boxShadow: `0 0 20px ${color.includes('blue') ? 'rgba(59, 130, 246, 0.5)' : 
-                          color.includes('purple') ? 'rgba(124, 58, 237, 0.5)' : 
+              boxShadow: `0 0 20px ${color.includes('pink') ? 'rgba(236, 72, 153, 0.5)' : 
+                          color.includes('purple') ? 'rgba(168, 85, 247, 0.5)' : 
                           'rgba(16, 185, 129, 0.5)'}`
             }}
           >
@@ -106,8 +106,8 @@ export function PromptCard({
           </div>
           
           {/* Tech decoration lines */}
-          <div className="absolute h-[1px] w-8 bg-gradient-to-r from-transparent via-blue-500/50 to-transparent top-1/2 -right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          <div className="absolute h-[1px] w-8 bg-gradient-to-r from-transparent via-blue-500/50 to-transparent top-1/2 -left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute h-[1px] w-8 bg-gradient-to-r from-transparent via-pink-500/50 to-transparent top-1/2 -right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute h-[1px] w-8 bg-gradient-to-r from-transparent via-pink-500/50 to-transparent top-1/2 -left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         </div>
         
         {/* Content with enhanced styling */}
@@ -120,15 +120,15 @@ export function PromptCard({
           {title}
         </h3>
         
-        <p className="text-gray-400 mb-4 group-hover:text-gray-300 transition-colors duration-300">
+        <p className="text-pink-200/70 mb-4 group-hover:text-pink-200 transition-colors duration-300">
           {description}
         </p>
         
         {/* Bottom glowing line */}
         <div className="mt-auto">
-          <div className="w-full h-[1px] bg-[#333333] relative overflow-hidden">
+          <div className="w-full h-[1px] bg-pink-500/10 relative overflow-hidden">
             <div 
-              className="absolute inset-y-0 left-0 bg-gradient-to-r from-transparent via-blue-500/70 to-transparent w-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              className="absolute inset-y-0 left-0 bg-gradient-to-r from-transparent via-pink-500/70 to-transparent w-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
               style={{
                 animation: isHovered ? 'moveGlow 3s infinite linear' : 'none'
               }}

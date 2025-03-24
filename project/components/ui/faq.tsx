@@ -1,10 +1,15 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { HelpCircle, Plus, Minus } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 
-const faqs = [
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+const faqItems: FAQItem[] = [
   {
     question: "Je Aisteroid zdarma?",
     answer: "Ano! Všechny prompty, agenti i návody jsou aktuálně dostupné zdarma. Pokud bys chtěl něco speciálního na míru, třeba agenta nebo prompt pro tvůj projekt, ozvi se – to už může být placené."
@@ -43,30 +48,37 @@ export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="relative py-24 overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-b from-purple-500/5 to-blue-500/5" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-500/10 via-transparent to-transparent" />
+    <section className="py-24 px-6 bg-[#0a0a0a] relative overflow-hidden">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-[#0a0a0a]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,#2b0a3d,#0a0a0a)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,#1e0035,#0a0a0a)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#460038,#0a0a0a)] opacity-30" />
       
-      <div className="relative max-w-7xl mx-auto px-6">
+      {/* Circuit pattern overlay */}
+      <div className="absolute inset-0 opacity-5" 
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ff00ff' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        }} 
+      />
+      
+      <div className="max-w-4xl mx-auto relative">
         <div className="text-center mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="flex items-center justify-center gap-2 mb-4"
+            className="inline-block px-4 py-1 rounded-full bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-pink-500/20 text-pink-400 text-sm font-medium mb-4"
           >
-            <HelpCircle className="w-5 h-5 text-purple-400" />
-            <span className="text-purple-400 font-semibold">FAQ</span>
+            FAQ
           </motion.div>
           
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl font-bold mb-4 bg-gradient-to-r from-white via-white to-purple-100 bg-clip-text text-transparent"
+            transition={{ delay: 0.1 }}
+            className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-purple-400 to-pink-400"
           >
             Často kladené otázky
           </motion.h2>
@@ -75,39 +87,66 @@ export function FAQ() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-gray-400 max-w-2xl mx-auto"
+            transition={{ delay: 0.2 }}
+            className="text-lg text-pink-200/70 max-w-2xl mx-auto"
           >
-            Najděte odpovědi na běžné dotazy o našich AI nástrojích a službách.
+            Vše, co potřebuješ vědět o AISTEROID
           </motion.p>
         </div>
 
-        <div className="max-w-3xl mx-auto">
-          {faqs.map((faq, index) => (
+        <div className="space-y-4">
+          {faqItems.map((faq, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="mb-4"
+              transition={{ delay: index * 0.1 }}
+              className="relative bg-[#1A1A1A] backdrop-blur-lg rounded-xl border border-pink-500/10 overflow-hidden"
             >
-              <button
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full text-left p-6 rounded-xl bg-gradient-to-b from-white/[0.08] to-transparent hover:from-white/[0.12] transition-all duration-300"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-medium text-lg">{faq.question}</span>
-                  {openIndex === index ? (
-                    <Minus className="w-5 h-5 text-purple-400" />
-                  ) : (
-                    <Plus className="w-5 h-5 text-purple-400" />
+              {/* Subtle animated gradients */}
+              <div className="absolute inset-0 bg-gradient-to-br from-pink-500/10 via-purple-500/10 to-pink-500/10 opacity-50" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-purple-500/10 via-transparent to-transparent" />
+              
+              {/* Animated border */}
+              <div className="absolute inset-0 rounded-xl border border-pink-500/30 cyberpunk-border" />
+              
+              <div className="relative z-10">
+                <button
+                  onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                  className="w-full px-6 py-4 flex items-center justify-between text-left group"
+                >
+                  <span className="text-lg font-medium text-pink-200 group-hover:text-pink-100 transition-colors duration-300">
+                    {faq.question}
+                  </span>
+                  <motion.div
+                    animate={{ rotate: openIndex === index ? 180 : 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {openIndex === index ? (
+                      <ChevronUp className="w-5 h-5 text-pink-400" />
+                    ) : (
+                      <ChevronDown className="w-5 h-5 text-pink-400" />
+                    )}
+                  </motion.div>
+                </button>
+                
+                <AnimatePresence>
+                  {openIndex === index && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-6 pb-4 text-pink-200/70">
+                        {faq.answer}
+                      </div>
+                    </motion.div>
                   )}
-                </div>
-                {openIndex === index && (
-                  <p className="mt-4 text-gray-400">{faq.answer}</p>
-                )}
-              </button>
+                </AnimatePresence>
+              </div>
             </motion.div>
           ))}
         </div>

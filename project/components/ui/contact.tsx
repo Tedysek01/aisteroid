@@ -1,11 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Input } from "./input";
-import { Button } from "./button";
-import { Textarea } from "./textarea";
 import { motion } from "framer-motion";
-import { Mail, User, MessageSquare, Send, Sparkles, AlertCircle, CheckCircle } from "lucide-react";
+import { Mail, Send, CheckCircle, AlertCircle } from "lucide-react";
 import { ContactService } from "@/lib/services/contact-service";
 
 export function Contact() {
@@ -14,22 +11,21 @@ export function Contact() {
     email: "",
     message: ""
   });
-  const [isHovered, setIsHovered] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Validace formuláře
     if (!formData.name || !formData.email || !formData.message) {
-      setError('Vyplňte prosím všechna pole.');
+      setError('Vyplňte prosím všechna pole');
       return;
     }
     
     if (!formData.email.includes('@')) {
-      setError('Zadejte prosím platný e-mail.');
+      setError('Zadejte prosím platný e-mail');
       return;
     }
     
@@ -39,12 +35,7 @@ export function Contact() {
     try {
       await ContactService.submitContactForm(formData);
       setIsSuccess(true);
-      // Reset formuláře
-      setFormData({
-        name: "",
-        email: "",
-        message: ""
-      });
+      setFormData({ name: "", email: "", message: "" });
     } catch (err) {
       setError('Nepodařilo se odeslat zprávu. Zkuste to prosím znovu.');
       console.error('Chyba při odesílání formuláře:', err);
@@ -52,119 +43,173 @@ export function Contact() {
       setIsSubmitting(false);
     }
   };
-
+  
   return (
-    <section className="py-24 px-6 bg-[#121212] relative overflow-hidden" id="contact">
-      {/* Cyberpunk background effects */}
-      <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 to-purple-500/5" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-transparent to-transparent opacity-70" />
+    <section className="py-24 px-6 bg-[#0a0a0a] relative overflow-hidden">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-[#0a0a0a]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,#2b0a3d,#0a0a0a)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,#1e0035,#0a0a0a)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#460038,#0a0a0a)] opacity-30" />
       
-      {/* Grid pattern overlay */}
-      <div className="absolute inset-0 opacity-5 cyberpunk-grid-bg" />
+      {/* Circuit pattern overlay */}
+      <div className="absolute inset-0 opacity-5" 
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ff00ff' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        }} 
+      />
       
       <div className="max-w-4xl mx-auto relative">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
-        >
-          <div className="inline-block px-4 py-1 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-400 text-sm font-medium mb-4">
-            <div className="flex items-center justify-center gap-2">
-              <Sparkles className="w-4 h-4 text-blue-400" />
-              <span>NAPIŠTE NÁM</span>
-            </div>
-          </div>
-          <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-white to-purple-400">
-            Kontaktujte nás
-          </h2>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            Máte dotaz nebo nápad? Neváhejte nám napsat zprávu a my se vám brzy ozveme.
-          </p>
-        </motion.div>
-        
+        <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-block px-4 py-1 rounded-full bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-pink-500/20 text-pink-400 text-sm font-medium mb-4"
+          >
+            KONTAKTUJTE NÁS
+          </motion.div>
+          
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-purple-400 to-pink-400"
+          >
+            Napište nám
+          </motion.h2>
+          
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-lg text-pink-200/70 max-w-2xl mx-auto"
+          >
+            Máte otázku nebo nápad? Napište nám a my vám brzy odpovíme.
+          </motion.p>
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="relative bg-[#1A1A1A] backdrop-blur-lg rounded-2xl p-8 border border-[#333333] overflow-hidden"
+          transition={{ delay: 0.3 }}
+          className="relative bg-[#1A1A1A] backdrop-blur-lg rounded-2xl p-8 border border-pink-500/10 overflow-hidden"
         >
           {/* Subtle animated gradients */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-30" />
+          <div className="absolute inset-0 bg-gradient-to-br from-pink-500/10 via-purple-500/10 to-pink-500/10 opacity-50" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-purple-500/10 via-transparent to-transparent" />
           
           {/* Animated border */}
-          <div className="absolute inset-0 rounded-2xl border border-blue-500/30 cyberpunk-border" />
+          <div className="absolute inset-0 rounded-2xl border border-pink-500/30 cyberpunk-border" />
           
-          <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
-            <div className="relative">
-              <label className="block text-sm font-medium mb-2 flex items-center gap-2 text-gray-300">
-                <User className="w-4 h-4 text-blue-400" />
-                Jméno
-              </label>
-              <div className="relative">
-                <Input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="bg-[#242424] border border-[#333] pl-10 py-6 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300"
-                  placeholder="Vaše jméno"
-                  required
-                  disabled={isSubmitting || isSuccess}
-                  style={{ pointerEvents: "auto" }}
-                />
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 z-30" />
+          <div className="relative z-10">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="relative group">
+                  <label htmlFor="name" className="block text-sm font-medium text-pink-200/70 mb-2">
+                    Jméno
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl bg-[#242424] border border-pink-500/20 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/20 focus:outline-none transition-all duration-300 placeholder-pink-200/50 text-white relative z-10"
+                    placeholder="Vaše jméno"
+                    disabled={isSubmitting || isSuccess}
+                  />
+                  
+                  {/* Highlight effect on focus */}
+                  <div className="absolute inset-0 rounded-xl bg-pink-500/5 opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                </div>
                 
-                {/* Focus highlight effect */}
-                <div className="absolute inset-0 rounded-xl bg-blue-500/5 opacity-0 peer-focus:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                <div className="relative group">
+                  <label htmlFor="email" className="block text-sm font-medium text-pink-200/70 mb-2">
+                    E-mail
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl bg-[#242424] border border-pink-500/20 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/20 focus:outline-none transition-all duration-300 placeholder-pink-200/50 text-white relative z-10"
+                    placeholder="vas@email.cz"
+                    disabled={isSubmitting || isSuccess}
+                  />
+                  
+                  {/* Highlight effect on focus */}
+                  <div className="absolute inset-0 rounded-xl bg-pink-500/5 opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                </div>
               </div>
-            </div>
-            
-            <div className="relative">
-              <label className="block text-sm font-medium mb-2 flex items-center gap-2 text-gray-300">
-                <Mail className="w-4 h-4 text-blue-400" />
-                E-mail
-              </label>
-              <div className="relative">
-                <Input
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="bg-[#242424] border border-[#333] pl-10 py-6 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300"
-                  placeholder="vas@email.cz"
-                  required
-                  disabled={isSubmitting || isSuccess}
-                  style={{ pointerEvents: "auto" }}
-                />
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 z-30" />
-              </div>
-            </div>
-            
-            <div className="relative">
-              <label className="block text-sm font-medium mb-2 flex items-center gap-2 text-gray-300">
-                <MessageSquare className="w-4 h-4 text-blue-400" />
-                Zpráva
-              </label>
-              <div className="relative">
-                <Textarea
+              
+              <div className="relative group">
+                <label htmlFor="message" className="block text-sm font-medium text-pink-200/70 mb-2">
+                  Zpráva
+                </label>
+                <textarea
+                  id="message"
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="bg-[#242424] border border-[#333] pl-10 py-4 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300 z-20 contact-form-element"
-                  placeholder="Napište nám, co máte na srdci..."
-                  rows={6}
-                  required
+                  rows={4}
+                  className="w-full px-4 py-3 rounded-xl bg-[#242424] border border-pink-500/20 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/20 focus:outline-none transition-all duration-300 placeholder-pink-200/50 text-white relative z-10 resize-none"
+                  placeholder="Vaše zpráva..."
                   disabled={isSubmitting || isSuccess}
-                  style={{ pointerEvents: "auto", position: "relative", zIndex: 20 }}
                 />
-                <MessageSquare className="absolute left-3 top-6 w-5 h-5 text-gray-400 z-30" />
+                
+                {/* Highlight effect on focus */}
+                <div className="absolute inset-0 rounded-xl bg-pink-500/5 opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none" />
               </div>
-            </div>
-            
+              
+              <div className="flex justify-end">
+                <motion.button
+                  type="submit"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="relative px-8 py-3 rounded-xl bg-gradient-to-r from-pink-600/80 via-purple-600/80 to-pink-600/80 hover:from-pink-600 hover:via-purple-600 hover:to-pink-600 text-white font-medium transition-all duration-300 overflow-hidden group"
+                  disabled={isSubmitting || isSuccess}
+                >
+                  <div className="relative z-10 flex items-center justify-center gap-2">
+                    {isSubmitting ? (
+                      <span>Odesílání...</span>
+                    ) : isSuccess ? (
+                      <>
+                        <span>Odesláno</span>
+                        <CheckCircle className="w-4 h-4" />
+                      </>
+                    ) : (
+                      <>
+                        <span>Odeslat</span>
+                        <Send className="w-4 h-4" />
+                      </>
+                    )}
+                  </div>
+                  
+                  {/* Neon glow effect */}
+                  <div 
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{
+                      boxShadow: "0 0 20px rgba(236, 72, 153, 0.5)",
+                    }}
+                  />
+                  
+                  {/* Animated shine effect */}
+                  <div 
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{
+                      backgroundSize: '200% 100%',
+                      animation: 'shineEffect 2s infinite linear',
+                    }}
+                  />
+                </motion.button>
+              </div>
+            </form>
+
             {/* Chybová zpráva */}
             {error && (
-              <div className="flex items-center gap-2 text-red-400 text-sm">
+              <div className="mt-4 flex items-center gap-2 text-rose-400 text-sm">
                 <AlertCircle className="w-4 h-4" />
                 <span>{error}</span>
               </div>
@@ -172,57 +217,22 @@ export function Contact() {
             
             {/* Úspěšná zpráva */}
             {isSuccess && (
-              <div className="flex items-center gap-2 text-green-400 text-sm">
+              <div className="mt-4 flex items-center gap-2 text-emerald-400 text-sm">
                 <CheckCircle className="w-4 h-4" />
                 <span>Děkujeme za vaši zprávu! Brzy se vám ozveme.</span>
               </div>
             )}
-            
-            <motion.button
-              type="submit"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-              whileTap={{ scale: 0.98 }}
-              className="w-full relative px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600/80 to-purple-600/80 hover:from-blue-600 hover:to-purple-600 text-white font-medium transition-all duration-300 overflow-hidden group"
-              disabled={isSubmitting || isSuccess}
-            >
-              <span className="relative z-10 flex items-center justify-center gap-2">
-                {isSubmitting ? (
-                  <span>Odesílání...</span>
-                ) : isSuccess ? (
-                  <>
-                    <span>Odesláno</span>
-                    <CheckCircle className="w-4 h-4" />
-                  </>
-                ) : (
-                  <>
-                    <span>Odeslat zprávu</span>
-                    <Send className="w-4 h-4" />
-                  </>
-                )}
-              </span>
-              
-              {/* Neon glow effect */}
-              <div 
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  boxShadow: "0 0 20px rgba(79, 70, 229, 0.5)",
-                  animation: isHovered ? "glow 1.5s infinite ease-in-out" : "none"
-                }}
-              />
-              
-              {/* Animated shine effect */}
-              <div 
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  backgroundSize: '200% 100%',
-                  animation: isHovered ? 'shineEffect 2s infinite linear' : 'none',
-                }}
-              />
-            </motion.button>
-          </form>
+          </div>
         </motion.div>
       </div>
+      
+      {/* Add CSS animations */}
+      <style jsx global>{`
+        @keyframes shineEffect {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
+      `}</style>
     </section>
   );
 }

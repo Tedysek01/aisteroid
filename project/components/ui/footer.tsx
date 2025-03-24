@@ -121,37 +121,37 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-[#121212] border-t border-white/10 py-12 relative">
+    <footer className="bg-[#0a0a0a] border-t border-pink-500/10 py-12 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           <div>
-            <h3 className="text-lg font-semibold mb-4">O nás</h3>
-            <p className="text-gray-400">
+            <h3 className="text-lg font-semibold mb-4 text-pink-100">O nás</h3>
+            <p className="text-pink-200/70">
               Pomáháme lidem používat AI smysluplně – bez složitostí, bez keců.
               Dáváme ti do ruky nástroje, které ti šetří čas a fakt něco dělají.
             </p>
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold mb-4">Rychlé odkazy</h3>
+            <h3 className="text-lg font-semibold mb-4 text-pink-100">Rychlé odkazy</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/agents" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/agents" className="text-pink-200/70 hover:text-pink-100 transition-colors">
                   AI Agenti
                 </Link>
               </li>
               <li>
-                <Link href="/prompts" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/prompts" className="text-pink-200/70 hover:text-pink-100 transition-colors">
                   Prompty
                 </Link>
               </li>
               <li>
-                <Link href="/blog" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/blog" className="text-pink-200/70 hover:text-pink-100 transition-colors">
                   Blog
                 </Link>
               </li>
               <li>
-                <Link href="/kontakt" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/kontakt" className="text-pink-200/70 hover:text-pink-100 transition-colors">
                   Kontakt
                 </Link>
               </li>
@@ -159,15 +159,15 @@ export function Footer() {
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold mb-4">Zdroje</h3>
+            <h3 className="text-lg font-semibold mb-4 text-pink-100">Zdroje</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/docs" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/docs" className="text-pink-200/70 hover:text-pink-100 transition-colors">
                   Dokumentace
                 </Link>
               </li>
               <li>
-                <Link href="/api" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/api" className="text-pink-200/70 hover:text-pink-100 transition-colors">
                   API Reference
                 </Link>
               </li>
@@ -175,11 +175,11 @@ export function Footer() {
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold mb-4">Kontakt</h3>
-            <p className="text-gray-400 mb-2">
+            <h3 className="text-lg font-semibold mb-4 text-pink-100">Kontakt</h3>
+            <p className="text-pink-200/70 mb-2">
               Máte otázky? Obraťte se na náš tým podpory.
             </p>
-            <Link href="/kontakt" className="text-blue-400 hover:text-blue-300 transition-colors">
+            <Link href="/kontakt" className="text-pink-400 hover:text-pink-300 transition-colors">
               Kontaktujte nás
             </Link>
           </div>
@@ -196,7 +196,7 @@ export function Footer() {
           onMouseLeave={handleMouseUp}
           aria-label="Admin přístup"
         >
-          <Settings className="w-8 h-8 text-gray-400" />
+          <Settings className="w-8 h-8 text-pink-200/70" />
         </button>
       )}
       
@@ -205,8 +205,8 @@ export function Footer() {
         <div className="absolute bottom-4 left-4 bg-black/70 text-xs p-2 rounded text-white opacity-60">
           {secretProgress.map((action, i) => (
             <span key={i} className={`inline-block w-3 h-3 mx-1 rounded-full ${
-              action === 'double' ? 'bg-blue-500' : 
-              action === 'triple' ? 'bg-green-500' : 'bg-red-500'
+              action === 'double' ? 'bg-pink-500' : 
+              action === 'triple' ? 'bg-purple-500' : 'bg-rose-500'
             }`}/>
           ))}
         </div>

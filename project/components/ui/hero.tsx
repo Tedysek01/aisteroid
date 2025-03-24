@@ -8,8 +8,8 @@ export function Hero() {
   return (
     <div className="relative overflow-hidden">
       {/* Background gradients */}
-      <div className="absolute inset-0 bg-gradient-to-b from-blue-500/10 via-purple-500/10 to-transparent" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-500/20 via-purple-500/20 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-pink-500/10 via-purple-500/10 to-transparent" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-pink-500/20 via-purple-500/20 to-transparent" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-16 sm:pt-20 pb-16 sm:pb-24 lg:flex lg:px-8 lg:py-40">
         <div className="max-w-2xl mx-auto lg:mx-0 lg:flex-shrink-0 lg:pt-8 text-center lg:text-left">
@@ -17,24 +17,21 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-r from-white via-white to-blue-100 bg-clip-text text-transparent"
-            style={{ contentVisibility: 'auto' }}
+            className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight"
           >
-            AI tě nemá děsit. 
-            <br className="block sm:hidden" />
-            <span className="inline">Má ti pomoct.</span>
+            <span className="block">AI tě nemá děsit.</span>
+            <span className="block">Má ti pomoct.</span>
           </motion.h1>
           
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-4 sm:mt-6 text-base sm:text-lg leading-7 sm:leading-8 text-gray-300"
+            className="mt-4 sm:mt-6 text-base sm:text-lg leading-7 sm:leading-8 text-pink-100"
             style={{ contentVisibility: 'auto' }}
           >
-            Vyber si nástroj, klikni – a nech AI pracovat za tebe.
-            <br className="block sm:hidden" />
-            <span className="inline">Všechno je připravené a ty si můžeš klidně jen hrát.</span>
+            <span className="block">Vyber si nástroj, klikni – a nech AI pracovat za tebe.</span>
+            <span className="block">Všechno je připravené a ty si můžeš klidně jen hrát.</span>
           </motion.p>
           
           <motion.div
@@ -46,7 +43,7 @@ export function Hero() {
           >
             <Link
               href="/agents"
-              className="w-full sm:w-auto group relative inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold shadow-lg shadow-blue-500/25 hover:shadow-blue-500/50 transition-all duration-300 overflow-hidden"
+              className="w-full sm:w-auto group relative inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 rounded-full bg-gradient-to-r from-pink-600 to-purple-600 text-white font-semibold shadow-lg shadow-pink-500/25 hover:shadow-pink-500/50 transition-all duration-300 overflow-hidden"
               prefetch={false}
             >
               <span className="relative z-10 flex items-center gap-2">
@@ -58,7 +55,7 @@ export function Hero() {
             
             <Link 
               href="/blog" 
-              className="text-sm font-semibold leading-6 text-white hover:text-blue-400 transition-colors duration-300 relative z-10"
+              className="text-sm font-semibold leading-6 text-pink-200 hover:text-pink-300 transition-colors duration-300 relative z-10"
               prefetch={false}
             >
               Více informací <span aria-hidden="true">→</span>
@@ -79,12 +76,12 @@ export function Hero() {
               <svg viewBox="0 0 200 200" className="w-full h-full" style={{ contentVisibility: 'auto' }}>
                 <defs>
                   <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#60A5FA" />
-                    <stop offset="100%" stopColor="#C084FC" />
+                    <stop offset="0%" stopColor="#EC4899" />
+                    <stop offset="100%" stopColor="#A855F7" />
                   </linearGradient>
                   <linearGradient id="gradient2" x1="100%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="#818CF8" />
-                    <stop offset="100%" stopColor="#F472B6" />
+                    <stop offset="0%" stopColor="#F472B6" />
+                    <stop offset="100%" stopColor="#F43F5E" />
                   </linearGradient>
                 </defs>
                 
@@ -156,9 +153,6 @@ export function Hero() {
                 />
               </svg>
             </div>
-
-            {/* Glowing Orb Effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/30 to-purple-500/30 rounded-full blur-3xl scale-90 opacity-50 animate-pulse" style={{ contentVisibility: 'auto' }} />
           </div>
         </motion.div>
       </div>

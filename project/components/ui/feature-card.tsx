@@ -20,7 +20,7 @@ export function FeatureCard({
   title,
   description,
   icon,
-  gradient = "from-blue-500/20 via-blue-500/10 to-transparent",
+  gradient = "from-pink-500/20 via-purple-500/10 to-transparent",
   className
 }: FeatureCardProps) {
   const Icon = iconMap[icon];
@@ -33,12 +33,12 @@ export function FeatureCard({
       <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
       <div className="relative">
         <div className="mb-6 inline-flex items-center justify-center rounded-[12px] bg-[#2A2A2A] p-3 bg-gradient-to-br from-[#2A2A2A] to-[#1C1C1C]">
-          {Icon && <Icon className="h-6 w-6" />}
+          {Icon && <Icon className="h-6 w-6 text-pink-400" />}
         </div>
-        <h3 className="mb-3 text-xl font-semibold text-white">
+        <h3 className="mb-3 text-xl font-semibold text-pink-100">
           {title}
         </h3>
-        <p className="text-gray-400">
+        <p className="text-pink-200/70">
           {description}
         </p>
       </div>

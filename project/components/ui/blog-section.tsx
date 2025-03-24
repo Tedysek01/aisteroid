@@ -37,10 +37,12 @@ export function BlogSection() {
   }, []);
 
   return (
-    <section className="py-24 px-6 bg-[#121212] relative overflow-hidden">
-      {/* Cyberpunk background effects */}
-      <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 to-purple-500/5" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-purple-500/10 via-transparent to-transparent" />
+    <section className="py-24 px-6 bg-[#0a0a0a] relative overflow-hidden">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-[#0a0a0a]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,#12001f,#0a0a0a)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,#240045,#0a0a0a)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#460038,#0a0a0a)] opacity-30" />
       
       {/* Digital noise overlay */}
       <div 
@@ -59,8 +61,8 @@ export function BlogSection() {
               viewport={{ once: true }}
               className="flex items-center gap-2 mb-4"
             >
-              <FileText className="w-5 h-5 text-purple-400" />
-              <span className="text-purple-400 font-medium">Blog</span>
+              <FileText className="w-5 h-5 text-pink-400" />
+              <span className="text-pink-400 font-medium">Blog</span>
             </motion.div>
             
             <motion.h2 
@@ -68,7 +70,7 @@ export function BlogSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-4xl font-bold bg-gradient-to-r from-white via-white to-purple-200 bg-clip-text text-transparent"
+              className="text-4xl font-bold bg-gradient-to-r from-pink-400 via-purple-400 to-pink-400 bg-clip-text text-transparent"
             >
               Nejnovější články
             </motion.h2>
@@ -82,21 +84,21 @@ export function BlogSection() {
           >
             <Link
               href="/blog"
-              className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors relative group mt-4 md:mt-0"
+              className="inline-flex items-center gap-2 text-pink-400 hover:text-pink-300 transition-colors relative group mt-4 md:mt-0"
             >
               <span>Zobrazit vše</span>
               <ArrowRight size={20} />
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-purple-400 group-hover:w-full transition-all duration-300"></span>
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-pink-400 group-hover:w-full transition-all duration-300"></span>
             </Link>
           </motion.div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {isLoading ? (
-            // Placeholder loader s cyberpunk efektem
+            // Placeholder loader s pink efektem
             Array(3).fill(0).map((_, i) => (
               <div key={i} className="bg-[#1A1A1A] border border-[#333333] rounded-xl p-6 animate-pulse h-64 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/5 to-blue-500/5 animate-pulse" />
+                <div className="absolute inset-0 bg-gradient-to-tr from-pink-500/5 to-purple-500/5 animate-pulse" />
               </div>
             ))
           ) : posts.map((post, index) => (
@@ -105,18 +107,18 @@ export function BlogSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={isDataLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative bg-[#1A1A1A] backdrop-blur-lg rounded-xl overflow-hidden hover:transform hover:scale-[1.02] transition-all duration-500 border border-[#333333] hover:border-purple-500/50"
+              className="group relative bg-[#1A1A1A] backdrop-blur-lg rounded-xl overflow-hidden hover:transform hover:scale-[1.02] transition-all duration-500 border border-[#333333] hover:border-pink-500/50"
               style={{
                 boxShadow: "0 0 20px rgba(0, 0, 0, 0.2)",
               }}
             >
               {/* Hover glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-purple-500/5 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-pink-500/5 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
               <Link href={`/blog/${post.id}`}>
                 <div className="relative h-52 overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] to-transparent z-10 opacity-60" />
-                  <div className="absolute inset-0 border-b border-purple-500/20" />
+                  <div className="absolute inset-0 border-b border-pink-500/20" />
                   
                   <Image
                     src={post.coverImage || "https://images.unsplash.com/photo-1677442136019-21780ecad995"}
@@ -128,29 +130,29 @@ export function BlogSection() {
                   {/* Futuristic overlay pattern */}
                   <div className="absolute inset-0 opacity-20 mix-blend-overlay"
                     style={{
-                      backgroundImage: `linear-gradient(45deg, rgba(128, 0, 255, 0.1) 25%, transparent 25%, transparent 50%, rgba(128, 0, 255, 0.1) 50%, rgba(128, 0, 255, 0.1) 75%, transparent 75%, transparent)`,
+                      backgroundImage: `linear-gradient(45deg, rgba(236, 72, 153, 0.1) 25%, transparent 25%, transparent 50%, rgba(236, 72, 153, 0.1) 50%, rgba(236, 72, 153, 0.1) 75%, transparent 75%, transparent)`,
                       backgroundSize: '10px 10px'
                     }}
                   />
                 </div>
                 
                 <div className="p-6 relative z-10">
-                  <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
+                  <div className="flex items-center gap-4 text-sm text-pink-200/70 mb-3">
                     <span className="flex items-center gap-1">
-                      <Clock size={14} className="text-purple-400" />
-                      <span className="group-hover:text-purple-300 transition-colors duration-300">{post.readTime}</span>
+                      <Clock size={14} className="text-pink-400" />
+                      <span className="group-hover:text-pink-300 transition-colors duration-300">{post.readTime}</span>
                     </span>
                     <span className="flex items-center gap-1">
-                      <User size={14} className="text-purple-400" />
-                      <span className="group-hover:text-purple-300 transition-colors duration-300">{post.author}</span>
+                      <User size={14} className="text-pink-400" />
+                      <span className="group-hover:text-pink-300 transition-colors duration-300">{post.author}</span>
                     </span>
                   </div>
                   
-                  <h2 className="text-xl font-bold mb-3 transition-colors duration-300 group-hover:text-white">{post.title}</h2>
-                  <p className="text-gray-400 transition-colors duration-300 group-hover:text-gray-300">{post.excerpt}</p>
+                  <h2 className="text-xl font-bold mb-3 transition-colors duration-300 group-hover:text-pink-100">{post.title}</h2>
+                  <p className="text-pink-200/70 transition-colors duration-300 group-hover:text-pink-200">{post.excerpt}</p>
                   
-                  <div className="mt-4 pt-3 border-t border-[#333333] flex justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <div className="text-purple-400 flex items-center text-sm font-medium">
+                  <div className="mt-4 pt-3 border-t border-pink-500/10 flex justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <div className="text-pink-400 flex items-center text-sm font-medium">
                       <span>Číst článek</span>
                       <ArrowRight className="ml-1 w-4 h-4" />
                     </div>
