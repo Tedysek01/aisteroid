@@ -18,6 +18,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-r from-white via-white to-blue-100 bg-clip-text text-transparent"
+            style={{ contentVisibility: 'auto' }}
           >
             AI tě nemá děsit. 
             <br className="block sm:hidden" />
@@ -29,6 +30,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             className="mt-4 sm:mt-6 text-base sm:text-lg leading-7 sm:leading-8 text-gray-300"
+            style={{ contentVisibility: 'auto' }}
           >
             Vyber si nástroj, klikni – a nech AI pracovat za tebe.
             <br className="block sm:hidden" />
@@ -40,10 +42,12 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
             className="mt-8 sm:mt-10 flex flex-col items-center gap-y-4 sm:flex-row sm:gap-x-6 lg:justify-start relative z-10"
+            style={{ contentVisibility: 'auto' }}
           >
             <Link
               href="/agents"
               className="w-full sm:w-auto group relative inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold shadow-lg shadow-blue-500/25 hover:shadow-blue-500/50 transition-all duration-300 overflow-hidden"
+              prefetch={false}
             >
               <span className="relative z-10 flex items-center gap-2">
                 Začít používat
@@ -52,7 +56,11 @@ export function Hero() {
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
             </Link>
             
-            <Link href="/blog" className="text-sm font-semibold leading-6 text-white hover:text-blue-400 transition-colors duration-300 relative z-10">
+            <Link 
+              href="/blog" 
+              className="text-sm font-semibold leading-6 text-white hover:text-blue-400 transition-colors duration-300 relative z-10"
+              prefetch={false}
+            >
               Více informací <span aria-hidden="true">→</span>
             </Link>
           </motion.div>
@@ -63,11 +71,12 @@ export function Hero() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, delay: 0.3 }}
           className="relative -mt-8 sm:-mt-12 lg:mt-0 lg:ml-16 flex-1 flex justify-center lg:justify-end z-0"
+          style={{ contentVisibility: 'auto' }}
         >
           <div className="relative w-full aspect-square max-w-[300px] sm:max-w-[400px] lg:max-w-[500px] mx-auto">
             {/* Abstract Neural Network Animation */}
             <div className="absolute inset-0">
-              <svg viewBox="0 0 200 200" className="w-full h-full">
+              <svg viewBox="0 0 200 200" className="w-full h-full" style={{ contentVisibility: 'auto' }}>
                 <defs>
                   <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#60A5FA" />
@@ -98,6 +107,7 @@ export function Hero() {
                       repeat: Infinity,
                       repeatType: "reverse"
                     }}
+                    style={{ contentVisibility: 'auto' }}
                   />
                 ))}
                 
@@ -122,6 +132,7 @@ export function Hero() {
                       repeat: Infinity,
                       repeatType: "reverse"
                     }}
+                    style={{ contentVisibility: 'auto' }}
                   />
                 ))}
                 
@@ -141,12 +152,13 @@ export function Hero() {
                     repeat: Infinity,
                     repeatType: "reverse"
                   }}
+                  style={{ contentVisibility: 'auto' }}
                 />
               </svg>
             </div>
 
             {/* Glowing Orb Effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/30 to-purple-500/30 rounded-full blur-3xl scale-90 opacity-50 animate-pulse" />
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/30 to-purple-500/30 rounded-full blur-3xl scale-90 opacity-50 animate-pulse" style={{ contentVisibility: 'auto' }} />
           </div>
         </motion.div>
       </div>
