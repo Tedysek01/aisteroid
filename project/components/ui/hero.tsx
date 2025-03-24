@@ -27,11 +27,10 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-4 sm:mt-6 text-base sm:text-lg leading-7 sm:leading-8 text-pink-100"
-            style={{ contentVisibility: 'auto' }}
+            className="mt-4 sm:mt-6 leading-7 sm:leading-8 text-pink-100 text-center lg:text-left"
           >
-            <span className="block">Vyber si nástroj, klikni – a nech AI pracovat za tebe.</span>
-            <span className="block">Všechno je připravené a ty si můžeš klidně jen hrát.</span>
+            <span className="block text-[clamp(14px,2.5vw,20px)]">Vyber si nástroj, klikni – a nech AI pracovat za tebe.</span>
+            <span className="block text-[clamp(14px,2.5vw,20px)]">Všechno je připravené a ty si můžeš klidně jen hrát.</span>
           </motion.p>
           
           <motion.div
