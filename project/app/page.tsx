@@ -197,8 +197,8 @@ export default function Home() {
           </div>
         </section>
 
-        <PromptSection />
         <AgentsSection />
+        <PromptSection />
         <BlogSection />
         <WaitlistSection />
         <FAQ />

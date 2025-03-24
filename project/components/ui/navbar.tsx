@@ -12,8 +12,8 @@ export function Navbar() {
   const pathname = usePathname();
 
   const navigation = [
-    { name: "AI Agenti", href: "/agents" },
     { name: "Prompty", href: "/prompts" },
+    { name: "AI Agenti", href: "/agents" },
     { name: "Blog", href: "/blog" },
     { name: "Kontakt", href: "/kontakt" },
   ];
