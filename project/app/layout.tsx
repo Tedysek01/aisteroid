@@ -5,8 +5,18 @@ import { Navbar } from '@/components/ui/navbar';
 import { Footer } from '@/components/ui/footer';
 import { Analytics } from '@vercel/analytics/react';
 
-const syne = Syne({ subsets: ['latin'] });
-const inter = Inter({ subsets: ['latin'] });
+const syne = Syne({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-syne',
+  weight: ['400', '500', '600', '700', '800'],
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
 
 export const metadata: Metadata = {
   title: 'AI Nástroje & Agenti | Moderní AI Řešení',
@@ -19,8 +29,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="cs" className="dark">
-      <body className={`${inter.className} ${syne.className} bg-[#0a0a0a] text-white antialiased`}>
+    <html lang="cs" className={`dark ${syne.variable} ${inter.variable}`}>
+      <body className={`${inter.className} bg-[#0a0a0a] text-white antialiased font-sans`}>
         <div className="relative min-h-screen">
           <div className="absolute inset-0 bg-gradient-to-b from-pink-500/5 via-purple-500/5 to-transparent" />
           <div className="relative">
