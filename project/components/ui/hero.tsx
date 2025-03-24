@@ -17,24 +17,22 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-5xl font-bold tracking-tight sm:text-6xl bg-gradient-to-r from-white via-white to-blue-100 bg-clip-text text-transparent"
+            className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl bg-gradient-to-r from-white via-white to-blue-100 bg-clip-text text-transparent"
           >
             AI tě nemá děsit. 
-            <br />
-            Má ti pomoct.
+            <br className="hidden sm:block" />
+            <span className="sm:inline">Má ti pomoct.</span>
           </motion.h1>
           
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-6 text-lg leading-8 text-gray-300"
+            className="mt-4 sm:mt-6 text-base sm:text-lg leading-7 sm:leading-8 text-gray-300"
           >
             Vyber si nástroj, klikni – a nech AI pracovat za tebe.
-            <br />
-            Všechno je připravené a ty si můžeš klidně jen hrát.
-
-
+            <br className="hidden sm:block" />
+            <span className="sm:inline">Všechno je připravené a ty si můžeš klidně jen hrát.</span>
           </motion.p>
           
           <motion.div

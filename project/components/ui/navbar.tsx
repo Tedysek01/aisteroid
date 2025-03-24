@@ -19,7 +19,7 @@ export function Navbar() {
   ];
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50">
+    <div className="fixed top-0 left-0 right-0 z-50 -mt-[2px]">
       <div className="h-[1px] w-full bg-gradient-to-r from-blue-500/0 via-purple-500/50 to-blue-500/0"></div>
       <nav className="bg-gradient-to-b from-[#1a1a1a] to-[#0f0f0f] backdrop-blur-xl shadow-2xl shadow-black/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
