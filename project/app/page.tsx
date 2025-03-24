@@ -47,7 +47,7 @@ export default function Home() {
       <main className="flex-grow">
         <Hero />
         
-        <section className="py-24 px-6 lg:px-8 bg-[#121212] relative overflow-hidden">
+        <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-[#121212] relative overflow-hidden">
           {/* Advanced Cyberpunk Background Effects */}
           <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 via-purple-900/10 to-transparent" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500/10 via-transparent to-transparent" />
@@ -73,36 +73,39 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="text-center mb-16"
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="text-center mb-12 sm:mb-16"
             >
-              <div className="inline-block px-4 py-1 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-400 text-sm font-medium mb-4">
+              <div className="inline-block px-3 sm:px-4 py-1 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-400 text-sm font-medium mb-4">
                 <div className="flex items-center justify-center gap-2">
                   <Cpu className="w-4 h-4 text-blue-400" />
                   <span>HLAVNÍ FUNKCE</span>
                 </div>
               </div>
-              <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-white to-purple-400">
-              Proč AISTEROID?
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-white to-purple-400">
+                Proč AISTEROID?
               </h2>
-              <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-              Protože AI nemusí být složitá.
-Aisteroid ti dá nástroje, které rovnou fungují – bez kódování, bez nastavování, bez zbytečnýho přemýšlení.
-
-
+              <p className="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto px-4">
+                Protože AI nemusí být složitá.
+                <br className="block sm:hidden" />
+                <span className="inline">Aisteroid ti dá nástroje, které rovnou fungují – bez kódování, bez nastavování, bez zbytečnýho přemýšlení.</span>
               </p>
             </motion.div>
             
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
               {features.map((feature, index) => (
                 <motion.div 
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="relative rounded-2xl backdrop-blur-lg p-8 transition-all duration-500 group overflow-hidden"
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ 
+                    duration: 0.5, 
+                    delay: index * 0.1,
+                    ease: "easeOut"
+                  }}
+                  className="relative rounded-2xl backdrop-blur-lg p-6 sm:p-8 group overflow-hidden"
                   style={{
                     boxShadow: `0 0 30px rgba(0, 0, 0, 0.3)`,
                   }}
@@ -121,20 +124,20 @@ Aisteroid ti dá nástroje, které rovnou fungují – bez kódování, bez nast
                   <div className="absolute w-20 h-20 -bottom-10 -left-10 bg-gradient-to-tl from-white/0 via-white/0 to-white/5 rounded-full blur-xl group-hover:opacity-100 opacity-0 transition-opacity duration-500" />
                   
                   <div className="relative">
-                    <div className="mb-6 inline-flex items-center justify-center rounded-xl p-3 relative overflow-hidden group-hover:scale-105 transition-all duration-300">
+                    <div className="mb-4 sm:mb-6 inline-flex items-center justify-center rounded-xl p-3 relative overflow-hidden group-hover:scale-105 transition-transform duration-300">
                       {/* Icon container with specialized gradient */}
                       <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-20 rounded-xl`} />
                       
                       {/* Icon container with glow */}
                       <div 
-                        className="relative p-4 rounded-xl"
+                        className="relative p-3 sm:p-4 rounded-xl"
                         style={{
                           boxShadow: `0 0 20px ${feature.shadowColor}`
                         }}
                       >
-                        {feature.icon === "Bot" && <Bot className={`h-7 w-7 ${feature.iconColor}`} />}
-                        {feature.icon === "Sparkles" && <Sparkles className={`h-7 w-7 ${feature.iconColor}`} />}
-                        {feature.icon === "Rocket" && <Rocket className={`h-7 w-7 ${feature.iconColor}`} />}
+                        {feature.icon === "Bot" && <Bot className={`h-6 w-6 sm:h-7 sm:w-7 ${feature.iconColor}`} />}
+                        {feature.icon === "Sparkles" && <Sparkles className={`h-6 w-6 sm:h-7 sm:w-7 ${feature.iconColor}`} />}
+                        {feature.icon === "Rocket" && <Rocket className={`h-6 w-6 sm:h-7 sm:w-7 ${feature.iconColor}`} />}
 
                         {/* Pulsing animation behind icon */}
                         <div 
@@ -147,7 +150,7 @@ Aisteroid ti dá nástroje, které rovnou fungují – bez kódování, bez nast
                       </div>
                     </div>
                     
-                    <h3 className="mb-3 text-xl font-semibold text-white group-hover:text-transparent group-hover:bg-clip-text transition-all duration-300 bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-300"
+                    <h3 className="mb-2 sm:mb-3 text-lg sm:text-xl font-semibold text-white group-hover:text-transparent group-hover:bg-clip-text transition-all duration-300 bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-300"
                         style={{
                           backgroundImage: `linear-gradient(90deg, #fff 0%, #f0f0f0 100%)`,
                           backgroundSize: '200% 100%',
@@ -157,12 +160,12 @@ Aisteroid ti dá nástroje, které rovnou fungují – bez kódování, bez nast
                       {feature.title}
                     </h3>
                     
-                    <p className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300">
+                    <p className="text-sm sm:text-base text-gray-400 group-hover:text-gray-300 transition-colors duration-300">
                       {feature.description}
                     </p>
                     
                     {/* Subtle reveal link on hover */}
-                    <div className="mt-5 pt-3 border-t border-white/5 opacity-0 group-hover:opacity-100 transition-all duration-500 flex justify-end">
+                    <div className="mt-4 sm:mt-5 pt-3 border-t border-white/5 opacity-0 group-hover:opacity-100 transition-all duration-500 flex justify-end">
                       {index === 0 ? (
                         <Link href="/agents" className={`flex items-center text-sm font-medium ${feature.iconColor}`}>
                           <span>Zjistit více</span>

@@ -10,11 +10,13 @@ import Link from "next/link";
 export function PromptSection() {
   const [prompts, setPrompts] = useState<Prompt[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() => {
     const fetchPrompts = async () => {
       try {
         setIsLoading(true);
+        setIsDataLoaded(false);
         const allPrompts = await PromptService.getAllPrompts();
         // Omezíme počet zobrazených promptů na 3
         const featuredPrompts = allPrompts.slice(0, 3);
@@ -23,6 +25,10 @@ export function PromptSection() {
         console.error("Chyba při načítání promptů:", error);
       } finally {
         setIsLoading(false);
+        // Počkáme krátkou chvíli před zobrazením animací
+        setTimeout(() => {
+          setIsDataLoaded(true);
+        }, 100);
       }
     };
 
@@ -111,6 +117,7 @@ Připravené k použití. Vyladěné. Funkční.
                 color={getColorForPrompt(prompt, index)}
                 delay={index * 0.2}
                 slug={prompt.slug}
+                isDataLoaded={isDataLoaded}
               />
             ))
           ) : (

@@ -14,6 +14,7 @@ export interface PromptCardProps {
   delay?: number;
   id?: string; // Make id optional since it's only used for the key prop
   slug?: string; // Add slug for navigation
+  isDataLoaded?: boolean;
 }
 
 export function PromptCard({
@@ -23,6 +24,7 @@ export function PromptCard({
   color,
   delay = 0,
   slug,
+  isDataLoaded = false
 }: PromptCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const promptUrl = slug ? `/prompts/${slug}` : '#';
@@ -109,11 +111,10 @@ export function PromptCard({
         </div>
         
         {/* Content with enhanced styling */}
-        <h3 className="text-xl font-bold mb-3 group-hover:text-transparent transition-colors duration-300 bg-clip-text group-hover:bg-gradient-to-r"
+        <h3 className="text-xl font-bold mb-3 transition-all duration-300"
             style={{
-              backgroundImage: isHovered ? 
-                `linear-gradient(90deg, #fff, ${color.replace('/20', '/90')})` : 
-                'none'
+              color: isHovered ? color.replace('/20', '') : '#fff',
+              textShadow: isHovered ? `0 0 10px ${color.replace('/20', '/50')}` : 'none'
             }}
         >
           {title}
@@ -176,8 +177,8 @@ export function PromptCard({
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay }}
+      animate={isDataLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.5, delay }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className="relative group bg-transparent h-full rounded-xl p-6 border border-[#333333] overflow-hidden hover:border-transparent transition-all duration-500 flex flex-col"

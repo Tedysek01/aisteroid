@@ -10,11 +10,13 @@ import { AgentService, Agent } from "@/lib/services/agent-service";
 export function AgentsSection() {
   const [agents, setAgents] = useState<Agent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() => {
     const fetchAgents = async () => {
       try {
         setIsLoading(true);
+        setIsDataLoaded(false);
         const allAgents = await AgentService.getAllAgents();
         // Omezíme počet zobrazených agentů na 3
         const featuredAgents = allAgents.slice(0, 3);
@@ -23,6 +25,10 @@ export function AgentsSection() {
         console.error("Chyba při načítání agentů:", error);
       } finally {
         setIsLoading(false);
+        // Počkáme krátkou chvíli před zobrazením animací
+        setTimeout(() => {
+          setIsDataLoaded(true);
+        }, 100);
       }
     };
 
@@ -98,8 +104,7 @@ Bez kódu. Bez chaosu. Jen výsledky.
               <motion.div
                 key={agent.id}
                 initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                animate={isDataLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="group relative bg-gradient-to-b from-[#1A1A1A] to-[#161616] rounded-2xl p-6 border border-[#333333] hover:border-blue-500/30 transition-all duration-300 overflow-hidden"
                 style={{

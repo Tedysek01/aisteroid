@@ -11,17 +11,17 @@ export function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-blue-500/10 via-purple-500/10 to-transparent" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-500/20 via-purple-500/20 to-transparent" />
       
-      <div className="relative max-w-7xl mx-auto px-6 pt-20 pb-24 sm:pb-32 lg:flex lg:px-8 lg:py-40">
-        <div className="max-w-2xl lg:flex-shrink-0 lg:pt-8">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-16 sm:pt-20 pb-16 sm:pb-24 lg:flex lg:px-8 lg:py-40">
+        <div className="max-w-2xl mx-auto lg:mx-0 lg:flex-shrink-0 lg:pt-8 text-center lg:text-left">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl bg-gradient-to-r from-white via-white to-blue-100 bg-clip-text text-transparent"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-r from-white via-white to-blue-100 bg-clip-text text-transparent"
           >
             AI tě nemá děsit. 
-            <br className="hidden sm:block" />
-            <span className="sm:inline">Má ti pomoct.</span>
+            <br className="block sm:hidden" />
+            <span className="inline">Má ti pomoct.</span>
           </motion.h1>
           
           <motion.p
@@ -31,19 +31,19 @@ export function Hero() {
             className="mt-4 sm:mt-6 text-base sm:text-lg leading-7 sm:leading-8 text-gray-300"
           >
             Vyber si nástroj, klikni – a nech AI pracovat za tebe.
-            <br className="hidden sm:block" />
-            <span className="sm:inline">Všechno je připravené a ty si můžeš klidně jen hrát.</span>
+            <br className="block sm:hidden" />
+            <span className="inline">Všechno je připravené a ty si můžeš klidně jen hrát.</span>
           </motion.p>
           
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="mt-10 flex items-center gap-x-6"
+            className="mt-8 sm:mt-10 flex flex-col items-center gap-y-4 sm:flex-row sm:gap-x-6 lg:justify-start relative z-10"
           >
             <Link
               href="/agents"
-              className="group relative inline-flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold shadow-lg shadow-blue-500/25 hover:shadow-blue-500/50 transition-all duration-300 overflow-hidden"
+              className="w-full sm:w-auto group relative inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold shadow-lg shadow-blue-500/25 hover:shadow-blue-500/50 transition-all duration-300 overflow-hidden"
             >
               <span className="relative z-10 flex items-center gap-2">
                 Začít používat
@@ -52,7 +52,7 @@ export function Hero() {
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
             </Link>
             
-            <Link href="/blog" className="text-sm font-semibold leading-6 text-white hover:text-blue-400 transition-colors duration-300">
+            <Link href="/blog" className="text-sm font-semibold leading-6 text-white hover:text-blue-400 transition-colors duration-300 relative z-10">
               Více informací <span aria-hidden="true">→</span>
             </Link>
           </motion.div>
@@ -62,9 +62,9 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="relative mt-16 lg:mt-0 lg:ml-16 flex-1"
+          className="relative -mt-8 sm:-mt-12 lg:mt-0 lg:ml-16 flex-1 flex justify-center lg:justify-end z-0"
         >
-          <div className="relative w-full aspect-square max-w-[500px] mx-auto">
+          <div className="relative w-full aspect-square max-w-[300px] sm:max-w-[400px] lg:max-w-[500px] mx-auto">
             {/* Abstract Neural Network Animation */}
             <div className="absolute inset-0">
               <svg viewBox="0 0 200 200" className="w-full h-full">

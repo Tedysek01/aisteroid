@@ -10,16 +10,26 @@ import { useEffect, useState } from "react";
 
 export function BlogSection() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        setIsLoading(true);
+        setIsDataLoaded(false);
         const publishedPosts = await BlogService.getPublishedPosts();
         const latestPosts = publishedPosts.slice(0, 3);
         setPosts(latestPosts);
       } catch (error) {
         console.error("Chyba při načítání příspěvků:", error);
         setPosts([]);
+      } finally {
+        setIsLoading(false);
+        // Počkáme krátkou chvíli před zobrazením animací
+        setTimeout(() => {
+          setIsDataLoaded(true);
+        }, 100);
       }
     };
 
@@ -82,13 +92,19 @@ export function BlogSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts.map((post, index) => (
+          {isLoading ? (
+            // Placeholder loader s cyberpunk efektem
+            Array(3).fill(0).map((_, i) => (
+              <div key={i} className="bg-[#1A1A1A] border border-[#333333] rounded-xl p-6 animate-pulse h-64 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/5 to-blue-500/5 animate-pulse" />
+              </div>
+            ))
+          ) : posts.map((post, index) => (
             <motion.article
               key={post.id}
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
+              animate={isDataLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
               className="group relative bg-[#1A1A1A] backdrop-blur-lg rounded-xl overflow-hidden hover:transform hover:scale-[1.02] transition-all duration-500 border border-[#333333] hover:border-purple-500/50"
               style={{
                 boxShadow: "0 0 20px rgba(0, 0, 0, 0.2)",
