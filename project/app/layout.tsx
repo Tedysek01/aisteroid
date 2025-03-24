@@ -1,11 +1,12 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Syne } from 'next/font/google';
+import { Syne, Inter } from 'next/font/google';
 import { Navbar } from '@/components/ui/navbar';
 import { Footer } from '@/components/ui/footer';
 import { Analytics } from '@vercel/analytics/react';
 
 const syne = Syne({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'AI Nástroje & Agenti | Moderní AI Řešení',
@@ -19,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="cs" className="dark">
-      <body className={`${syne.className} bg-[#0a0a0a] text-white antialiased`}>
+      <body className={`${inter.className} bg-[#0a0a0a] text-white antialiased`}>
         <div className="relative min-h-screen">
           <div className="absolute inset-0 bg-gradient-to-b from-pink-500/5 via-purple-500/5 to-transparent" />
           <div className="relative">
