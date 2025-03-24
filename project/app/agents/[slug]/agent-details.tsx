@@ -106,19 +106,19 @@ export function AgentDetails({ agent }: { agent: Agent | undefined }) {
 
   return (
     <div className="min-h-screen bg-[#121212] text-white">
-      <main className="max-w-4xl mx-auto px-6 py-24">
-        <div className="mb-8">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-24">
+        <div className="mb-6 sm:mb-8">
           <Link href="/agents" className="text-blue-400 hover:text-blue-300 flex items-center gap-2">
             <ArrowLeft size={20} />
             Zpět na agenty
           </Link>
         </div>
 
-        <div className="p-[2px] rounded-2xl bg-gradient-to-r from-blue-500/50 via-purple-500/50 to-pink-500/50 shadow-[0_10px_50px_rgba(0,0,0,0.5)] shadow-blue-900/20">
-          <div className="bg-[#1a1a1a]/90 backdrop-blur-lg rounded-2xl p-8 h-full">
-            <h1 className="text-4xl font-bold mb-4">{agent.name}</h1>
+        <div className="rounded-2xl bg-gradient-to-r from-blue-500/50 via-purple-500/50 to-pink-500/50 shadow-[0_10px_50px_rgba(0,0,0,0.5)] shadow-blue-900/20">
+          <div className="bg-[#1a1a1a]/90 backdrop-blur-lg rounded-2xl p-4 sm:p-8 h-full">
+            <h1 className="text-3xl sm:text-4xl font-bold mb-4">{agent.name}</h1>
             
-            <div className="flex flex-wrap gap-2 mb-6">
+            <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
               <span
                 className="px-3 py-1 rounded-full text-sm bg-white/10 flex items-center gap-1"
               >
@@ -127,13 +127,13 @@ export function AgentDetails({ agent }: { agent: Agent | undefined }) {
               </span>
             </div>
 
-            <div className="prose prose-invert max-w-none">
-              <p className="text-xl text-gray-300 mb-8">{agent.shortDescription}</p>
+            <div className="prose prose-invert max-w-none prose-sm sm:prose-base">
+              <p className="text-lg sm:text-xl text-gray-300 mb-6 sm:mb-8">{agent.shortDescription}</p>
               
-              <div className="mb-8" dangerouslySetInnerHTML={{ __html: agent.fullDescription }} />
+              <div className="mb-6 sm:mb-8" dangerouslySetInnerHTML={{ __html: agent.fullDescription }} />
               
               {embedUrl ? (
-                <div className="aspect-video rounded-lg overflow-hidden bg-black/30 mb-8">
+                <div className="aspect-video rounded-lg overflow-hidden bg-black/30 mb-6 sm:mb-8">
                   <iframe
                     width="100%"
                     height="100%"
@@ -145,7 +145,7 @@ export function AgentDetails({ agent }: { agent: Agent | undefined }) {
                   ></iframe>
                 </div>
               ) : (
-                <div className="aspect-video rounded-lg overflow-hidden bg-black/30 flex items-center justify-center mb-8">
+                <div className="aspect-video rounded-lg overflow-hidden bg-black/30 flex items-center justify-center mb-6 sm:mb-8">
                   <p className="text-gray-400">Demo video již brzy</p>
                 </div>
               )}
@@ -154,7 +154,7 @@ export function AgentDetails({ agent }: { agent: Agent | undefined }) {
               <div className="flex justify-center mt-6">
                 <Button 
                   onClick={openModal}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 rounded-md font-medium text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_15px_rgba(56,178,255,0.5)] relative overflow-hidden group"
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-md font-medium text-base sm:text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_15px_rgba(56,178,255,0.5)] relative overflow-hidden group"
                 >
                   <span className="relative z-10">Toho chci</span>
                   <span className="absolute inset-0 bg-gradient-to-r from-blue-600/60 to-purple-600/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
@@ -163,9 +163,9 @@ export function AgentDetails({ agent }: { agent: Agent | undefined }) {
               
               {/* Modální okno s formulářem */}
               <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-                <DialogContent className="bg-[#1a1a1a] border border-gray-800 text-white max-w-md">
+                <DialogContent className="bg-[#1a1a1a] border border-gray-800 text-white max-w-md mx-4">
                   <DialogHeader>
-                    <DialogTitle className="text-2xl font-bold text-white mb-2">
+                    <DialogTitle className="text-xl sm:text-2xl font-bold text-white mb-2">
                       Mám zájem o agenta
                     </DialogTitle>
                     <DialogDescription className="text-gray-400">
@@ -174,7 +174,7 @@ export function AgentDetails({ agent }: { agent: Agent | undefined }) {
                   </DialogHeader>
                   
                   {!submitted ? (
-                    <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+                    <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 mt-4">
                       <div>
                         <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-1">
                           Jméno
@@ -227,8 +227,8 @@ export function AgentDetails({ agent }: { agent: Agent | undefined }) {
                       </Button>
                     </form>
                   ) : (
-                    <div className="py-8 text-center">
-                      <div className="mb-4 text-green-400 font-bold text-xl">Děkujeme!</div>
+                    <div className="py-6 sm:py-8 text-center">
+                      <div className="mb-3 sm:mb-4 text-green-400 font-bold text-lg sm:text-xl">Děkujeme!</div>
                       <p className="text-gray-300">Vaše poptávka byla úspěšně odeslána. Brzy se vám ozveme.</p>
                     </div>
                   )}
