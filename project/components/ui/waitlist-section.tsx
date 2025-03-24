@@ -103,15 +103,15 @@ Bez spamu. Jen věci, co dávají smysl.
             <div className="relative z-10">
               <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-4">
                 <div className="flex-grow relative group">
-                  <div className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-blue-400 transition-colors duration-300">
-                    <Mail className="w-5 h-5" />
+                  <div className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-200 group-focus-within:text-blue-400 transition-colors duration-300 z-20">
+                    <Mail className="w-5 h-5 stroke-[2.5]" />
                   </div>
                   <input
                     type="email"
                     placeholder="Zadejte váš e-mail"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 rounded-xl bg-[#242424] border border-[#333333] focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all duration-300 placeholder-gray-500 text-white"
+                    className="w-full pl-12 pr-4 py-3 rounded-xl bg-[#242424] border border-[#333333] focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all duration-300 placeholder-gray-500 text-white relative z-10"
                     disabled={isSubmitting || isSuccess}
                   />
                   

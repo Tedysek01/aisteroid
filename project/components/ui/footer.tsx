@@ -121,16 +121,14 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-[#121212] border-t border-white/10 py-12">
+    <footer className="bg-[#121212] border-t border-white/10 py-12 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           <div>
             <h3 className="text-lg font-semibold mb-4">O nás</h3>
             <p className="text-gray-400">
-            Pomáháme lidem používat AI smysluplně – bez složitostí, bez keců.
-Dáváme ti do ruky nástroje, které ti šetří čas a fakt něco dělají.
-
-
+              Pomáháme lidem používat AI smysluplně – bez složitostí, bez keců.
+              Dáváme ti do ruky nástroje, které ti šetří čas a fakt něco dělají.
             </p>
           </div>
           
@@ -185,34 +183,34 @@ Dáváme ti do ruky nástroje, které ti šetří čas a fakt něco dělají.
               Kontaktujte nás
             </Link>
           </div>
-          
-          {showAdminButton && (
-            <button
-              id="admin-secret-button"
-              className="w-8 h-8 fixed bottom-4 right-4 opacity-40 hover:opacity-80 transition-opacity z-50"
-              onClick={handleClick}
-              onMouseDown={handleMouseDown}
-              onMouseUp={handleMouseUp}
-              onMouseLeave={handleMouseUp}
-              aria-label="Admin přístup"
-            >
-              <Settings className="w-full h-full text-gray-400" />
-            </button>
-          )}
-          
-          {/* Indikátor postupu */}
-          {secretProgress.length > 0 && (
-            <div className="fixed bottom-4 left-4 bg-black/70 text-xs p-2 rounded text-white opacity-60 z-50">
-              {secretProgress.map((action, i) => (
-                <span key={i} className={`inline-block w-3 h-3 mx-1 rounded-full ${
-                  action === 'double' ? 'bg-blue-500' : 
-                  action === 'triple' ? 'bg-green-500' : 'bg-red-500'
-                }`}/>
-              ))}
-            </div>
-          )}
         </div>
       </div>
+      
+      {showAdminButton && (
+        <button
+          id="admin-secret-button"
+          className="absolute bottom-4 right-4 opacity-40 hover:opacity-80 transition-opacity"
+          onClick={handleClick}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+          aria-label="Admin přístup"
+        >
+          <Settings className="w-8 h-8 text-gray-400" />
+        </button>
+      )}
+      
+      {/* Indikátor postupu */}
+      {secretProgress.length > 0 && (
+        <div className="absolute bottom-4 left-4 bg-black/70 text-xs p-2 rounded text-white opacity-60">
+          {secretProgress.map((action, i) => (
+            <span key={i} className={`inline-block w-3 h-3 mx-1 rounded-full ${
+              action === 'double' ? 'bg-blue-500' : 
+              action === 'triple' ? 'bg-green-500' : 'bg-red-500'
+            }`}/>
+          ))}
+        </div>
+      )}
     </footer>
   );
 }
