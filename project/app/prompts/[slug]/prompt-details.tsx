@@ -33,7 +33,7 @@ export function PromptDetails({ prompt }: { prompt: Prompt | undefined }) {
             <div className="flex items-center gap-3 mb-4 sm:mb-6">
               <span className="px-3 py-1 rounded-full text-sm bg-white/10 flex items-center gap-1">
                 <Tag size={12} />
-                <span className="capitalize">{prompt.industry}</span>
+                <span className="capitalize">{prompt.category}</span>
               </span>
             </div>
 
@@ -49,7 +49,7 @@ export function PromptDetails({ prompt }: { prompt: Prompt | undefined }) {
               <div className="bg-black/30 rounded-lg p-4 sm:p-6 mb-6 sm:mb-8 overflow-auto max-h-[400px] sm:max-h-[600px]">
                 <div 
                   className="text-sm sm:text-base text-gray-300 whitespace-pre-wrap break-words overflow-hidden"
-                  dangerouslySetInnerHTML={{ __html: prompt.promptText }}
+                  dangerouslySetInnerHTML={{ __html: prompt.prompt }}
                 />
               </div>
               

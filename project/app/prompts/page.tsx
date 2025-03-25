@@ -126,7 +126,7 @@ export default function PromptsPage() {
   }, []);
 
   const filteredPrompts = selectedCategory
-    ? prompts.filter(p => p.industry === selectedCategory)
+    ? prompts.filter(p => p.category === selectedCategory)
     : prompts;
 
   return (
@@ -177,7 +177,7 @@ export default function PromptsPage() {
         ) : filteredPrompts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredPrompts.map((prompt, index) => {
-              const colorScheme = getCategoryColor(prompt.industry);
+              const colorScheme = getCategoryColor(prompt.category);
               return (
                 <motion.div
                   key={prompt.id}
@@ -223,7 +223,7 @@ export default function PromptsPage() {
                       className={`px-3 py-1 rounded-md text-xs font-medium bg-gradient-to-r ${colorScheme.gradient} bg-opacity-30 flex items-center gap-1 shadow-lg shadow-pink-500/20 border border-pink-500/5`}
                     >
                       <Tag size={10} className="text-pink-400" />
-                      <span className="capitalize text-pink-200">{prompt.industry}</span>
+                      <span className="capitalize text-pink-200">{prompt.category}</span>
                     </span>
                   </div>
                   

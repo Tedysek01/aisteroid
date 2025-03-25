@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Settings } from "lucide-react";
@@ -14,7 +14,7 @@ export function Footer() {
   const clickTimesRef = useRef<number[]>([]);
   const longPressTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const secretCode = ['double', 'triple', 'hold', 'double'];
+  const secretCode = useMemo(() => ['double', 'triple', 'hold', 'double'], []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -49,7 +49,7 @@ export function Footer() {
     }, 3000);
     
     return () => clearTimeout(resetTimer);
-  }, [secretProgress, router]);
+  }, [secretProgress, router, secretCode]);
 
   // Jednodušší detekce kombinací
   const handleClick = () => {

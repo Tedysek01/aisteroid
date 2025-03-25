@@ -13,7 +13,7 @@ export default function PromptPage({ params }: { params: { slug: string } }) {
     const fetchPrompt = async () => {
       try {
         setLoading(true);
-        const promptData = await PromptService.getPromptBySlug(params.slug);
+        const promptData = await PromptService.getPrompt(params.slug);
         setPrompt(promptData || undefined);
       } catch (error) {
         console.error("Chyba při načítání promptu:", error);

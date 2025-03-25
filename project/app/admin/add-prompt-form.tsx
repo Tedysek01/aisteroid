@@ -10,6 +10,15 @@ import { PromptService } from "@/lib/services/prompt-service";
 const categories = ["Marketing", "Programování", "Design", "Obecné", "n8n", "OpenAI"];
 const difficultyLevels = ["Začátečník", "Pokročilý", "Expert"];
 
+function generateSlug(title: string): string {
+  return title
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
+
 export function AddPromptForm() {
   const [formData, setFormData] = useState({
     title: "",
@@ -30,7 +39,11 @@ export function AddPromptForm() {
     setIsSubmitting(true);
     
     try {
-      const promptId = await PromptService.createPrompt(formData);
+      const slug = generateSlug(formData.title);
+      const promptId = await PromptService.createPrompt({
+        ...formData,
+        slug
+      });
       
       // Reset formuláře
       setFormData({

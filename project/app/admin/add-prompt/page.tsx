@@ -37,7 +37,7 @@ export default function AddPromptPage() {
         .replace(/(^-|-$)/g, '');
       setFormData(prev => ({ ...prev, slug: generatedSlug }));
     }
-  }, [formData.title]);
+  }, [formData.title, formData.slug]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
