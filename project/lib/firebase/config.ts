@@ -13,16 +13,12 @@ const firebaseConfig = {
   appId: "1:922789177202:web:4a725a340948eefea89feb",
 };
 
-// Inicializace Firebase s try/catch blokem
-let app;
-let db: Firestore | undefined;
+// Inicializace Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-try {
-  app = initializeApp(firebaseConfig);
-  db = getFirestore(app);
-  console.log("Firebase úspěšně inicializován");
-} catch (error) {
-  console.error("Chyba při inicializaci Firebase:", error);
+if (!db) {
+  throw new Error('Firebase není inicializován');
 }
 
-export const getDb = (): Firestore | undefined => db;
+export const getDb = (): Firestore => db;

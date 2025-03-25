@@ -12,25 +12,39 @@ import {
   deleteDoc, 
   query, 
   where,
-  setDoc,
-  Firestore
+  setDoc
 } from "firebase/firestore";
+import { 
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  getStorage
+} from "firebase/storage";
 
 const BLOG_COLLECTION = "blogPosts";
 
-// Pomocná funkce pro získání db instance
-const getFirestore = (): Firestore => {
-  const db = getDb();
-  if (!db) {
-    throw new Error("Firebase Firestore není inicializován");
-  }
-  return db;
-};
+export interface Blog {
+  id: string;
+  slug: string;
+  title: string;
+  perex: string;
+  content: string;
+  author: string;
+  created_at: string;
+  reading_time: number | null;
+  cover_image: string | null;
+  tags: string[];
+  seo_title: string;
+  seo_description: string;
+}
 
 export class BlogService {
+  private static collection = 'blog_posts';
+  private static storage = getStorage();
+
   static async getAllPosts(): Promise<BlogPost[]> {
     try {
-      const db = getFirestore();
+      const db = getDb();
       const blogCollectionRef = collection(db, BLOG_COLLECTION);
       const snapshot = await getDocs(blogCollectionRef);
       
@@ -53,7 +67,7 @@ export class BlogService {
 
   static async getPublishedPosts(): Promise<BlogPost[]> {
     try {
-      const db = getFirestore();
+      const db = getDb();
       const blogCollectionRef = collection(db, BLOG_COLLECTION);
       const q = query(blogCollectionRef, where("status", "==", "published"));
       const snapshot = await getDocs(q);
@@ -77,7 +91,7 @@ export class BlogService {
 
   static async getPostBySlug(slug: string): Promise<BlogPost | null> {
     try {
-      const db = getFirestore();
+      const db = getDb();
       const blogCollectionRef = collection(db, BLOG_COLLECTION);
       const snapshot = await getDocs(blogCollectionRef);
       
@@ -110,40 +124,88 @@ export class BlogService {
     }
   }
 
-  static async createPost(post: BlogPost): Promise<string> {
+  static async createPost(data: {
+    title: string;
+    perex: string;
+    content: string;
+    author: string;
+    created_at: string;
+    reading_time?: string;
+    cover_image?: File | null;
+    tags?: string[];
+    seo_title?: string;
+    seo_description?: string;
+  }): Promise<string> {
     try {
-      const db = getFirestore();
-      const blogCollectionRef = collection(db, BLOG_COLLECTION);
+      let coverImageUrl = null;
       
-      const docRef = doc(blogCollectionRef, post.id);
-      await setDoc(docRef, post);
-      
-      return post.id;
+      if (data.cover_image) {
+        const fileRef = ref(this.storage, `blog-images/${data.cover_image.name}`);
+        await uploadBytes(fileRef, data.cover_image);
+        coverImageUrl = await getDownloadURL(fileRef);
+      }
+
+      const slug = data.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '');
+
+      const blogData = {
+        title: data.title,
+        perex: data.perex,
+        content: data.content,
+        author: data.author,
+        created_at: data.created_at,
+        reading_time: data.reading_time ? parseInt(data.reading_time) : null,
+        cover_image: coverImageUrl,
+        tags: data.tags || [],
+        seo_title: data.seo_title || '',
+        seo_description: data.seo_description || '',
+        slug
+      };
+
+      const docRef = doc(collection(getDb(), this.collection), slug);
+      await setDoc(docRef, blogData);
+
+      return slug;
     } catch (error) {
-      console.error('Error creating blog post in Firebase:', error);
-      throw new Error('Failed to create blog post in Firebase');
+      console.error('Error creating blog:', error);
+      throw error;
     }
   }
 
-  static async updatePost(post: BlogPost): Promise<void> {
+  static async getPost(slug: string): Promise<Blog | null> {
     try {
-      const db = getFirestore();
-      const docRef = doc(db, BLOG_COLLECTION, post.id);
-      await updateDoc(docRef, { ...post });
+      const docRef = doc(collection(getDb(), this.collection), slug);
+      const docSnap = await getDoc(docRef);
+      
+      if (docSnap.exists()) {
+        return { id: docSnap.id, ...docSnap.data() } as Blog;
+      }
+      return null;
     } catch (error) {
-      console.error('Error updating blog post in Firebase:', error);
-      throw new Error('Failed to update blog post in Firebase');
+      console.error('Error getting blog:', error);
+      throw error;
     }
   }
 
-  static async deletePost(id: string): Promise<void> {
+  static async updatePost(slug: string, data: Partial<Blog>): Promise<void> {
     try {
-      const db = getFirestore();
-      const docRef = doc(db, BLOG_COLLECTION, id);
+      const docRef = doc(collection(getDb(), this.collection), slug);
+      await updateDoc(docRef, data);
+    } catch (error) {
+      console.error('Error updating blog:', error);
+      throw error;
+    }
+  }
+
+  static async deletePost(slug: string): Promise<void> {
+    try {
+      const docRef = doc(collection(getDb(), this.collection), slug);
       await deleteDoc(docRef);
     } catch (error) {
-      console.error('Error deleting blog post from Firebase:', error);
-      throw new Error('Failed to delete blog post from Firebase');
+      console.error('Error deleting blog:', error);
+      throw error;
     }
   }
 }

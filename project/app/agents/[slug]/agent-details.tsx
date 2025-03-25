@@ -128,9 +128,16 @@ export function AgentDetails({ agent }: { agent: Agent | undefined }) {
             </div>
 
             <div className="prose prose-invert max-w-none prose-sm sm:prose-base">
-              <p className="text-lg sm:text-xl text-gray-300 mb-6 sm:mb-8">{agent.shortDescription}</p>
+              <div 
+                className="text-lg sm:text-xl text-gray-300 mb-6 sm:mb-8"
+                dangerouslySetInnerHTML={{ __html: agent.description }}
+              />
               
-              <div className="mb-6 sm:mb-8" dangerouslySetInnerHTML={{ __html: agent.fullDescription }} />
+              <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">Use-case / problém, který řeší</h2>
+              <div 
+                className="mb-6 sm:mb-8"
+                dangerouslySetInnerHTML={{ __html: agent.use_case }}
+              />
               
               {embedUrl ? (
                 <div className="aspect-video rounded-lg overflow-hidden bg-black/30 mb-6 sm:mb-8">

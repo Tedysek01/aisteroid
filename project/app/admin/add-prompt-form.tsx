@@ -5,28 +5,22 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { PromptService, Prompt } from "@/lib/services/prompt-service";
+import { PromptService } from "@/lib/services/prompt-service";
 
-const promptCategories = [
-  "Práce a produktivita",
-  "Copywriting a marketing",
-  "SEO a obsah",
-  "E-commerce a podnikání",
-  "Strategie a plánování",
-  "Osobní rozvoj",
-  "Komunikace",
-  "Vývoj a technologie",
-  "Vzdělávání",
-  "Kreativita a zábava"
-];
+const categories = ["Marketing", "Programování", "Design", "Obecné", "n8n", "OpenAI"];
+const difficultyLevels = ["Začátečník", "Pokročilý", "Expert"];
 
 export function AddPromptForm() {
   const [formData, setFormData] = useState({
     title: "",
-    industry: "",
     description: "",
-    promptText: "",
-    slug: ""
+    prompt: "",
+    video: "",
+    category: "",
+    difficulty: "",
+    example_output: "",
+    instructions: "",
+    created_at: new Date().toISOString().split('T')[0]
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -36,84 +30,86 @@ export function AddPromptForm() {
     setIsSubmitting(true);
     
     try {
-      // Vytvořit prompt v Firebase
-      const prompt: Prompt = {
-        id: formData.slug || String(Date.now()),
-        title: formData.title,
-        industry: formData.industry,
-        description: formData.description,
-        promptText: formData.promptText,
-        slug: formData.slug
-      };
-      
-      const promptId = await PromptService.createPrompt(prompt);
-      console.log("Prompt uložen do Firebase s ID:", promptId);
+      const promptId = await PromptService.createPrompt(formData);
       
       // Reset formuláře
       setFormData({
         title: "",
-        industry: "",
         description: "",
-        promptText: "",
-        slug: ""
+        prompt: "",
+        video: "",
+        category: "",
+        difficulty: "",
+        example_output: "",
+        instructions: "",
+        created_at: new Date().toISOString().split('T')[0]
       });
       
-      alert(`Prompt úspěšně uložen do Firebase!\nPrompt ID: ${promptId}`);
+      alert(`Prompt úspěšně uložen!`);
     } catch (error) {
-      console.error("Chyba při ukládání do Firebase:", error);
-      alert(`Chyba při ukládání do Firebase: ${error instanceof Error ? error.message : 'Neznámá chyba'}`);
+      console.error("Chyba při ukládání:", error);
+      alert(`Chyba při ukládání: ${error instanceof Error ? error.message : 'Neznámá chyba'}`);
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const title = e.target.value;
-    const slug = title.toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)/g, '');
-    
-    setFormData({
-      ...formData,
-      title,
-      slug
-    });
   };
 
   return (
     <div className="bg-[#1C1C1C] p-6 rounded-lg">
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label className="block text-sm font-medium mb-2">Název promptu</label>
+          <label className="block text-sm font-medium mb-2">Název</label>
           <Input
             value={formData.title}
-            onChange={handleTitleChange}
+            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
             className="bg-[#242424] border-[#333]"
             required
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2">URL Slug</label>
-          <Input
-            value={formData.slug}
-            onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+          <label className="block text-sm font-medium mb-2">Krátký popis</label>
+          <Textarea
+            value={formData.description}
+            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
             className="bg-[#242424] border-[#333]"
             required
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-2">Prompt</label>
+          <Textarea
+            value={formData.prompt}
+            onChange={(e) => setFormData({ ...formData, prompt: e.target.value })}
+            className="bg-[#242424] border-[#333]"
+            rows={6}
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-2">Video (odkaz nebo upload)</label>
+          <Input
+            type="url"
+            value={formData.video}
+            onChange={(e) => setFormData({ ...formData, video: e.target.value })}
+            className="bg-[#242424] border-[#333]"
+            placeholder="https://..."
           />
         </div>
 
         <div>
           <label className="block text-sm font-medium mb-2">Kategorie</label>
           <Select
-            value={formData.industry}
-            onValueChange={(value) => setFormData({ ...formData, industry: value })}
+            value={formData.category}
+            onValueChange={(value) => setFormData({ ...formData, category: value })}
           >
             <SelectTrigger className="bg-[#242424] border-[#333]">
               <SelectValue placeholder="Vyberte kategorii" />
             </SelectTrigger>
             <SelectContent className="bg-[#242424] border-[#333]">
-              {promptCategories.map((category) => (
+              {categories.map((category) => (
                 <SelectItem 
                   key={category} 
                   value={category}
@@ -127,23 +123,55 @@ export function AddPromptForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2">Popis promptu</label>
+          <label className="block text-sm font-medium mb-2">Obtížnost</label>
+          <Select
+            value={formData.difficulty}
+            onValueChange={(value) => setFormData({ ...formData, difficulty: value })}
+          >
+            <SelectTrigger className="bg-[#242424] border-[#333]">
+              <SelectValue placeholder="Vyberte obtížnost" />
+            </SelectTrigger>
+            <SelectContent className="bg-[#242424] border-[#333]">
+              {difficultyLevels.map((level) => (
+                <SelectItem 
+                  key={level} 
+                  value={level}
+                  className="hover:bg-[#333]"
+                >
+                  {level}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-2">Příklad výstupu</label>
           <Textarea
-            value={formData.description}
-            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+            value={formData.example_output}
+            onChange={(e) => setFormData({ ...formData, example_output: e.target.value })}
             className="bg-[#242424] border-[#333]"
-            required
+            rows={4}
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2">Text promptu</label>
+          <label className="block text-sm font-medium mb-2">Jak prompt použít/upravit</label>
           <Textarea
-            value={formData.promptText}
-            onChange={(e) => setFormData({ ...formData, promptText: e.target.value })}
+            value={formData.instructions}
+            onChange={(e) => setFormData({ ...formData, instructions: e.target.value })}
             className="bg-[#242424] border-[#333]"
-            rows={6}
-            required
+            rows={4}
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-2">Datum přidání</label>
+          <Input
+            type="date"
+            value={formData.created_at}
+            onChange={(e) => setFormData({ ...formData, created_at: e.target.value })}
+            className="bg-[#242424] border-[#333]"
           />
         </div>
 

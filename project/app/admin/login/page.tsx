@@ -1,9 +1,3 @@
-import { redirect } from 'next/navigation';
-
-export default function AdminPage() {
-  redirect('/admin/login');
-}
-
 "use client";
 
 import { useState } from "react";
@@ -14,7 +8,7 @@ import { Lock, Mail, AlertCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import Cookies from 'js-cookie';
 
-export function AdminLoginPage() {
+export default function AdminLoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -140,16 +134,4 @@ export function AdminLoginPage() {
       </div>
     </div>
   );
-}
-
-function AdminCard({ title, description, href }: { title: string, description: string, href: string }) {
-  return (
-    <a 
-      href={href}
-      className="block p-6 bg-gray-900 rounded-lg hover:bg-gray-800 transition-colors"
-    >
-      <h3 className="text-xl font-semibold mb-2">{title}</h3>
-      <p className="text-gray-300">{description}</p>
-    </a>
-  );
-}
+} 
