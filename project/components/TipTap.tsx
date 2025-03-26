@@ -10,8 +10,9 @@ import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
 import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
+import CodeBlock from '@tiptap/extension-code-block';
 import { Button } from "@/components/ui/button";
-import { Bold, Italic, Underline as UnderlineIcon, List, ListOrdered, AlignLeft, AlignCenter, AlignRight, Link as LinkIcon, Table as TableIcon, Image as ImageIcon } from "lucide-react";
+import { Bold, Italic, Underline as UnderlineIcon, List, ListOrdered, AlignLeft, AlignCenter, AlignRight, Link as LinkIcon, Table as TableIcon, Image as ImageIcon, Code } from "lucide-react";
 
 interface TipTapProps {
   content: string;
@@ -40,6 +41,11 @@ export default function TipTap({ content, onChange, required = false, rows = 4 }
       TextAlign.configure({
         types: ['heading', 'paragraph'],
       }),
+      CodeBlock.configure({
+        HTMLAttributes: {
+          class: 'bg-[#1a1a1a] p-4 rounded-lg font-mono text-sm overflow-x-auto',
+        },
+      }),
     ],
     content: content,
     onUpdate: ({ editor }) => {
@@ -47,7 +53,7 @@ export default function TipTap({ content, onChange, required = false, rows = 4 }
     },
     editorProps: {
       attributes: {
-        class: `prose prose-invert max-w-none min-h-[${rows * 24}px] p-4 focus:outline-none`,
+        class: `prose prose-invert max-w-none min-h-[${rows * 24}px] p-4 focus:outline-none [&_a]:text-blue-400 [&_a:hover]:text-blue-300 [&_a]:underline [&_a]:underline-offset-4`,
         'data-required': required ? 'true' : 'false'
       }
     }
@@ -166,6 +172,15 @@ export default function TipTap({ content, onChange, required = false, rows = 4 }
           }}
         >
           <TableIcon size={16} />
+        </Button>
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+          className={editor.isActive('codeBlock') ? 'bg-[#333]' : ''}
+        >
+          <Code size={16} />
         </Button>
         <label className="cursor-pointer">
           <input

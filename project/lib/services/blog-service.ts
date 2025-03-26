@@ -36,16 +36,18 @@ export interface Blog {
   tags: string[];
   seo_title: string;
   seo_description: string;
+  status: 'draft' | 'published';
+  code_embed?: string;
 }
 
 export class BlogService {
-  private static collection = 'blog_posts';
+  private static collection = BLOG_COLLECTION;
   private static storage = getStorage();
 
   static async getAllPosts(): Promise<BlogPost[]> {
     try {
       const db = getDb();
-      const blogCollectionRef = collection(db, BLOG_COLLECTION);
+      const blogCollectionRef = collection(db, this.collection);
       const snapshot = await getDocs(blogCollectionRef);
       
       const posts = snapshot.docs.map(doc => {
@@ -68,7 +70,7 @@ export class BlogService {
   static async getPublishedPosts(): Promise<BlogPost[]> {
     try {
       const db = getDb();
-      const blogCollectionRef = collection(db, BLOG_COLLECTION);
+      const blogCollectionRef = collection(db, this.collection);
       const q = query(blogCollectionRef, where("status", "==", "published"));
       const snapshot = await getDocs(q);
       
@@ -92,7 +94,7 @@ export class BlogService {
   static async getPostBySlug(slug: string): Promise<BlogPost | null> {
     try {
       const db = getDb();
-      const blogCollectionRef = collection(db, BLOG_COLLECTION);
+      const blogCollectionRef = collection(db, this.collection);
       const snapshot = await getDocs(blogCollectionRef);
       
       const docWithSlugId = snapshot.docs.find(doc => doc.id === slug);
@@ -135,42 +137,66 @@ export class BlogService {
     tags?: string[];
     seo_title?: string;
     seo_description?: string;
+    code_embed?: string;
   }): Promise<string> {
     try {
+      // Validace povinných polí
+      if (!data.title || !data.content || !data.author) {
+        throw new Error('Chybí povinná pole: název, obsah nebo autor');
+      }
+
       let coverImageUrl = null;
       
       if (data.cover_image) {
-        const fileRef = ref(this.storage, `blog-images/${data.cover_image.name}`);
-        await uploadBytes(fileRef, data.cover_image);
-        coverImageUrl = await getDownloadURL(fileRef);
+        try {
+          // Převedení obrázku na Base64
+          const reader = new FileReader();
+          const base64Promise = new Promise<string>((resolve, reject) => {
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = reject;
+          });
+          reader.readAsDataURL(data.cover_image);
+          coverImageUrl = await base64Promise;
+        } catch (error) {
+          console.error('Chyba při zpracování obrázku:', error);
+          // Pokračujeme bez obrázku, pokud se zpracování nezdaří
+        }
       }
 
       const slug = data.title
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '-')
-        .replace(/(^-|-$)/g, '');
+        .replace(/(^-|-$)/g, '')
+        + '-' + Date.now().toString().slice(-4); // Přidáme unikátní identifikátor
 
       const blogData = {
         title: data.title,
-        perex: data.perex,
+        perex: data.perex || '',
         content: data.content,
         author: data.author,
-        created_at: data.created_at,
+        created_at: data.created_at || new Date().toISOString(),
         reading_time: data.reading_time ? parseInt(data.reading_time) : null,
         cover_image: coverImageUrl,
         tags: data.tags || [],
-        seo_title: data.seo_title || '',
-        seo_description: data.seo_description || '',
-        slug
+        seo_title: data.seo_title || data.title,
+        seo_description: data.seo_description || data.perex || '',
+        code_embed: data.code_embed || '',
+        slug,
+        status: 'draft'
       };
 
+      console.log('Ukládám data do Firebase:', blogData);
       const docRef = doc(collection(getDb(), this.collection), slug);
       await setDoc(docRef, blogData);
+      console.log('Blog úspěšně uložen do Firebase');
 
       return slug;
     } catch (error) {
-      console.error('Error creating blog:', error);
-      throw error;
+      console.error('Chyba při vytváření blogu:', error);
+      if (error instanceof Error) {
+        throw new Error(`Chyba při ukládání blogu: ${error.message}`);
+      }
+      throw new Error('Nepodařilo se vytvořit blog - neznámá chyba');
     }
   }
 

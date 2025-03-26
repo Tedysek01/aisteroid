@@ -11,6 +11,7 @@ export interface BlogPost {
   seoDescription?: string;
   status: 'draft' | 'published';
   tags?: string[];
+  code_embed?: string;
 }
 
 // Load posts from localStorage on the client side

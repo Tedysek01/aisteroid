@@ -97,6 +97,16 @@ export function BlogPostDetails({ slug }: { slug: string }) {
               className="blog-content prose prose-invert max-w-none prose-sm sm:prose-base"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
+
+            {post.code_embed && (
+              <div className="mt-8">
+                <div className="bg-[#1a1a1a] rounded-lg p-4 overflow-x-auto">
+                  <pre className="text-sm font-mono text-white">
+                    <code>{post.code_embed}</code>
+                  </pre>
+                </div>
+              </div>
+            )}
           </article>
         </div>
       </main>

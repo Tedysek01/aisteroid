@@ -4,6 +4,7 @@ import { Syne, Inter } from 'next/font/google';
 import { Navbar } from '@/components/ui/navbar';
 import { Footer } from '@/components/ui/footer';
 import { Analytics } from '@vercel/analytics/react';
+import GoogleAnalytics from '@/components/GoogleAnalytics';
 
 const syne = Syne({
   subsets: ['latin'],
@@ -53,6 +54,7 @@ export default function RootLayout({
           </div>
         </div>
         <Analytics />
+        <GoogleAnalytics />
       </body>
     </html>
   );

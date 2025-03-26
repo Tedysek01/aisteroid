@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import dynamic from 'next/dynamic';
 import { BlogService } from "@/lib/services/blog-service";
+import { Textarea } from "@/components/ui/textarea";
 
 const TipTap = dynamic(() => import('@/components/TipTap'), { ssr: false });
 
@@ -29,6 +30,17 @@ export default function AddBlogPage() {
     setIsSubmitting(true);
 
     try {
+      // Validace povinných polí
+      if (!formData.title.trim()) {
+        throw new Error('Název článku je povinný');
+      }
+      if (!formData.content.trim()) {
+        throw new Error('Obsah článku je povinný');
+      }
+      if (!formData.author.trim()) {
+        throw new Error('Autor je povinný');
+      }
+
       console.log('Odesílám data:', formData);
       const blogId = await BlogService.createPost(formData);
       console.log('Blog vytvořen s ID:', blogId);
@@ -50,7 +62,8 @@ export default function AddBlogPage() {
       alert('Blog byl úspěšně přidán!');
     } catch (error) {
       console.error('Detailní chyba při přidávání blogu:', error);
-      alert(`Nepodařilo se přidat blog: ${error instanceof Error ? error.message : 'Neznámá chyba'}`);
+      const errorMessage = error instanceof Error ? error.message : 'Neznámá chyba při ukládání blogu';
+      alert(`Nepodařilo se přidat blog: ${errorMessage}`);
     } finally {
       setIsSubmitting(false);
     }

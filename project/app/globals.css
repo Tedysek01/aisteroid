@@ -207,8 +207,8 @@ body {
   color: white;
 }
 
-.blog-content h3 {
-  font-size: 2rem;
+.blog-content h2 {
+  font-size: 1.75rem;
   margin-top: 2rem;
   margin-bottom: 1rem;
   color: white;
@@ -219,13 +219,73 @@ body {
   @apply font-display;
 }
 
-.blog-content h4 {
+@media (min-width: 640px) {
+  .blog-content h2 {
+    font-size: 2rem;
+    margin-top: 2.25rem;
+    margin-bottom: 1.125rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .blog-content h2 {
+    font-size: 2.25rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .blog-content h2 {
+    font-size: 2.5rem;
+  }
+}
+
+.blog-content h3 {
   font-size: 1.5rem;
+  margin-top: 1.75rem;
+  margin-bottom: 0.875rem;
+  color: white;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  @apply font-display;
+}
+
+@media (min-width: 640px) {
+  .blog-content h3 {
+    font-size: 1.75rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .blog-content h3 {
+    font-size: 2rem;
+  }
+}
+
+.blog-content h4 {
+  font-size: 1.25rem;
   margin-top: 1.5rem;
   margin-bottom: 0.75rem;
   color: white;
   font-weight: 600;
   @apply font-display;
+}
+
+@media (min-width: 640px) {
+  .blog-content h4 {
+    font-size: 1.375rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .blog-content h4 {
+    font-size: 1.5rem;
+  }
 }
 
 .blog-content p {
@@ -256,6 +316,25 @@ body {
 .blog-content strong {
   font-weight: 700;
   color: white;
+}
+
+.blog-content a {
+  color: #60a5fa;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(96, 165, 250, 0.3);
+  transition: all 0.2s ease-in-out;
+}
+
+.blog-content a:hover {
+  color: #93c5fd;
+  border-bottom-color: rgba(147, 197, 253, 0.8);
+  text-shadow: 0 0 8px rgba(147, 197, 253, 0.5);
+}
+
+.blog-content a:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.3);
+  border-radius: 4px;
 }
 
 /* Vylepšení interakce s formulářovými prvky */
