@@ -17,6 +17,18 @@ export interface PromptCardProps {
   isDataLoaded?: boolean;
 }
 
+// Pomocná funkce pro převod HTML na čistý text
+function htmlToPlainText(html: string): string {
+  if (typeof window === 'undefined') {
+    // Server-side: jednoduché odstranění HTML značek pomocí regex
+    return html.replace(/<[^>]*>/g, '');
+  }
+  // Client-side: použití DOM API
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || '';
+}
+
 export function PromptCard({
   title,
   description,
@@ -121,7 +133,7 @@ export function PromptCard({
         </h3>
         
         <p className="text-pink-200/70 mb-4 group-hover:text-pink-200 transition-colors duration-300">
-          {description}
+          {htmlToPlainText(description)}
         </p>
         
         {/* Bottom glowing line */}

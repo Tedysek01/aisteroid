@@ -26,6 +26,19 @@ export interface Prompt {
   created_at: string;
 }
 
+// Seznam kategorií promptů
+export const PROMPT_CATEGORIES = [
+  "Vytvořit obsah (reels, texty, scénáře)",
+  "Naučit se nebo vysvětlit téma",
+  "Navrhnout nebo ověřit nápad",
+  "Zautomatizovat úkol pomocí AI",
+  "Zlepšit psaní a komunikaci",
+  "Analyzovat, porovnat, rozhodnout se",
+  "Vymyslet název, pitch nebo strukturu",
+  "Připravit prezentaci, výpisky, výuku",
+  "Vylepšit svůj výstup"
+];
+
 export class PromptService {
   private static collection = 'prompts';
 

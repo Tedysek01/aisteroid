@@ -5,11 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import dynamic from 'next/dynamic';
-import { PromptService } from "@/lib/services/prompt-service";
+import { PromptService, PROMPT_CATEGORIES } from "@/lib/services/prompt-service";
 
 const TipTap = dynamic(() => import('@/components/TipTap'), { ssr: false });
 
-const categories = ["Práce & Produktivita", "Copywriting & Marketing", "Vzdělávání & Učení", "Kreativita & Generování obsahu", "Programování & Tech", "AI Agenti & Automatizace", "Analýza & Data", "E-commerce & Byznys", "Osobní rozvoj & Mindset"];
 const difficultyLevels = ["Začátečník", "Pokročilý", "Expert"];
 
 export default function AddPromptPage() {
@@ -151,7 +150,7 @@ export default function AddPromptPage() {
               <SelectValue placeholder="Vyberte kategorii" />
             </SelectTrigger>
             <SelectContent className="bg-[#242424] border-[#333]">
-              {categories.map((category) => (
+              {PROMPT_CATEGORIES.map((category) => (
                 <SelectItem 
                   key={category} 
                   value={category}

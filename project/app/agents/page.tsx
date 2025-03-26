@@ -94,7 +94,7 @@ export default function AgentsPage() {
                     {agent.name}
                   </h2>
                   <p className="text-gray-300 mb-6 group-hover:text-gray-200 transition-colors duration-300">
-                    {agent.shortDescription}
+                    {agent.description}
                   </p>
                   
                   <Link

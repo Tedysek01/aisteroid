@@ -5,9 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { PromptService } from "@/lib/services/prompt-service";
+import { PromptService, PROMPT_CATEGORIES } from "@/lib/services/prompt-service";
 
-const categories = ["Marketing", "Programování", "Design", "Obecné", "n8n", "OpenAI"];
 const difficultyLevels = ["Začátečník", "Pokročilý", "Expert"];
 
 function generateSlug(title: string): string {
@@ -118,11 +117,11 @@ export function AddPromptForm() {
             value={formData.category}
             onValueChange={(value) => setFormData({ ...formData, category: value })}
           >
-            <SelectTrigger className="bg-[#242424] border-[#333]">
+            <SelectTrigger className="bg-[#242424] border-[#333] w-[300px]">
               <SelectValue placeholder="Vyberte kategorii" />
             </SelectTrigger>
-            <SelectContent className="bg-[#242424] border-[#333]">
-              {categories.map((category) => (
+            <SelectContent className="bg-[#242424] border-[#333] w-[300px]">
+              {PROMPT_CATEGORIES.map((category) => (
                 <SelectItem 
                   key={category} 
                   value={category}

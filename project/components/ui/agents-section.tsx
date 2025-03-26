@@ -144,7 +144,7 @@ Bez kódu. Bez chaosu. Jen výsledky.
                   </div>
                   
                   <h3 className="text-xl font-bold mb-2 group-hover:text-pink-100 transition-colors duration-300">{agent.name}</h3>
-                  <p className="text-pink-200/70 mb-5 group-hover:text-pink-200 transition-colors duration-300">{agent.shortDescription}</p>
+                  <p className="text-pink-200/70 mb-5 group-hover:text-pink-200 transition-colors duration-300">{agent.description}</p>
                   
                   <Link
                     href={`/agents/${agent.slug}`}
