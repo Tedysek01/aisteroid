@@ -10,6 +10,13 @@ const nextConfig = {
     ],
   },
   // trailingSlash: true,  // Není potřeba pro serverové renderování
+  experimental: {
+    appDir: true,
+  },
+  // Povolení generování sitemap
+  generateBuildId: async () => {
+    return 'build-' + Date.now()
+  },
 };
 
 module.exports = nextConfig;

@@ -43,31 +43,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Základní statické stránky
   const staticPages = [
     {
-      url: 'https://aisteroid.cz',
+      url: 'https://www.aisteroid.cz',
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 1,
     },
     {
-      url: 'https://aisteroid.cz/agents',
+      url: 'https://www.aisteroid.cz/agents',
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 0.8,
     },
     {
-      url: 'https://aisteroid.cz/prompts',
+      url: 'https://www.aisteroid.cz/prompts',
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 0.8,
     },
     {
-      url: 'https://aisteroid.cz/blog',
+      url: 'https://www.aisteroid.cz/blog',
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.7,
     },
     {
-      url: 'https://aisteroid.cz/kontakt',
+      url: 'https://www.aisteroid.cz/kontakt',
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.5,
@@ -76,7 +76,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Generování URL pro blogové příspěvky
   const blogUrls = blogPosts.map(post => ({
-    url: `https://aisteroid.cz/blog/${post.slug}`,
+    url: `https://www.aisteroid.cz/blog/${post.slug}`,
     lastModified: post.updated_at,
     changeFrequency: 'weekly' as const,
     priority: 0.6,
@@ -84,7 +84,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Generování URL pro agenty
   const agentUrls = agents.map(agent => ({
-    url: `https://aisteroid.cz/agents/${agent.slug}`,
+    url: `https://www.aisteroid.cz/agents/${agent.slug}`,
     lastModified: agent.updated_at,
     changeFrequency: 'weekly' as const,
     priority: 0.6,
@@ -92,7 +92,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Generování URL pro prompty
   const promptUrls = prompts.map(prompt => ({
-    url: `https://aisteroid.cz/prompts/${prompt.slug}`,
+    url: `https://www.aisteroid.cz/prompts/${prompt.slug}`,
     lastModified: prompt.updated_at,
     changeFrequency: 'weekly' as const,
     priority: 0.6,
