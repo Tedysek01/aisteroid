@@ -8,6 +8,16 @@ import { useEffect, useState } from "react";
 import type { BlogPost } from "@/lib/data/blog-posts";
 import { BlogService } from "@/lib/services/blog-service";
 
+// Pomocná funkce pro odstranění HTML značek
+function stripHtml(html: string): string {
+  if (typeof window === 'undefined') {
+    return html.replace(/<[^>]*>/g, '');
+  }
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || '';
+}
+
 export default function BlogPage() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
@@ -148,7 +158,7 @@ export default function BlogPage() {
                       </h2>
                       
                       <p className="text-gray-400 mb-5 flex-grow">
-                        {post.excerpt}
+                        {stripHtml(post.excerpt)}
                       </p>
                       
                       {/* CTA */}

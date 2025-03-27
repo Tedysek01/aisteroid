@@ -23,19 +23,31 @@ import {
 
 const BLOG_COLLECTION = "blogPosts";
 
+// Pomocná funkce pro odstranění HTML značek
+function stripHtml(html: string): string {
+  if (typeof window === 'undefined') {
+    // Server-side: jednoduché odstranění HTML značek pomocí regex
+    return html.replace(/<[^>]*>/g, '');
+  }
+  // Client-side: použití DOM API
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || '';
+}
+
 export interface Blog {
   id: string;
   slug: string;
   title: string;
-  perex: string;
+  excerpt: string;
   content: string;
   author: string;
-  created_at: string;
-  reading_time: number | null;
-  cover_image: string | null;
+  date: string;
+  readTime: number | null;
+  coverImage: string | null;
   tags: string[];
-  seo_title: string;
-  seo_description: string;
+  seoTitle: string;
+  seoDescription: string;
   status: 'draft' | 'published';
   code_embed?: string;
 }
@@ -128,15 +140,15 @@ export class BlogService {
 
   static async createPost(data: {
     title: string;
-    perex: string;
+    excerpt: string;
     content: string;
     author: string;
-    created_at: string;
-    reading_time?: string;
-    cover_image?: File | null;
+    date: string;
+    readTime?: string;
+    coverImage?: File | null;
     tags?: string[];
-    seo_title?: string;
-    seo_description?: string;
+    seoTitle?: string;
+    seoDescription?: string;
     code_embed?: string;
   }): Promise<string> {
     try {
@@ -147,7 +159,7 @@ export class BlogService {
 
       let coverImageUrl = null;
       
-      if (data.cover_image) {
+      if (data.coverImage) {
         try {
           // Převedení obrázku na Base64
           const reader = new FileReader();
@@ -155,7 +167,7 @@ export class BlogService {
             reader.onload = () => resolve(reader.result as string);
             reader.onerror = reject;
           });
-          reader.readAsDataURL(data.cover_image);
+          reader.readAsDataURL(data.coverImage);
           coverImageUrl = await base64Promise;
         } catch (error) {
           console.error('Chyba při zpracování obrázku:', error);
@@ -169,17 +181,22 @@ export class BlogService {
         .replace(/(^-|-$)/g, '')
         + '-' + Date.now().toString().slice(-4); // Přidáme unikátní identifikátor
 
+      // Odstraníme HTML značky pouze z SEO polí
+      const cleanTitle = stripHtml(data.title);
+      const cleanSeoTitle = stripHtml(data.seoTitle || cleanTitle);
+      const cleanSeoDescription = stripHtml(data.seoDescription || data.excerpt || '');
+
       const blogData = {
         title: data.title,
-        perex: data.perex || '',
+        excerpt: data.excerpt || '',
         content: data.content,
         author: data.author,
-        created_at: data.created_at || new Date().toISOString(),
-        reading_time: data.reading_time ? parseInt(data.reading_time) : null,
-        cover_image: coverImageUrl,
+        date: data.date || new Date().toISOString(),
+        readTime: data.readTime ? parseInt(data.readTime) : null,
+        coverImage: coverImageUrl,
         tags: data.tags || [],
-        seo_title: data.seo_title || data.title,
-        seo_description: data.seo_description || data.perex || '',
+        seoTitle: cleanSeoTitle,
+        seoDescription: cleanSeoDescription,
         code_embed: data.code_embed || '',
         slug,
         status: 'draft'

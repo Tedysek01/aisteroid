@@ -8,6 +8,16 @@ import { BlogService } from "@/lib/services/blog-service";
 import type { BlogPost } from "@/lib/data/blog-posts";
 import { useEffect, useState } from "react";
 
+// Pomocná funkce pro odstranění HTML značek
+function stripHtml(html: string): string {
+  if (typeof window === 'undefined') {
+    return html.replace(/<[^>]*>/g, '');
+  }
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || '';
+}
+
 export function BlogSection() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -149,7 +159,7 @@ export function BlogSection() {
                   </div>
                   
                   <h2 className="text-xl font-bold mb-3 transition-colors duration-300 group-hover:text-pink-100">{post.title}</h2>
-                  <p className="text-pink-200/70 transition-colors duration-300 group-hover:text-pink-200">{post.excerpt}</p>
+                  <p className="text-pink-200/70 transition-colors duration-300 group-hover:text-pink-200">{stripHtml(post.excerpt)}</p>
                   
                   <div className="mt-4 pt-3 border-t border-pink-500/10 flex justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                     <div className="text-pink-400 flex items-center text-sm font-medium">
