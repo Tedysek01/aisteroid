@@ -22,7 +22,9 @@ export default function AddPromptPage() {
     difficulty: "",
     example_output: "",
     instructions: "",
-    created_at: new Date().toISOString().split('T')[0]
+    created_at: new Date().toISOString().split('T')[0],
+    seoTitle: "",
+    seoDescription: ""
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -58,7 +60,9 @@ export default function AddPromptPage() {
         difficulty: "",
         example_output: "",
         instructions: "",
-        created_at: new Date().toISOString().split('T')[0]
+        created_at: new Date().toISOString().split('T')[0],
+        seoTitle: "",
+        seoDescription: ""
       });
 
       alert('Prompt byl úspěšně přidán!');
@@ -216,6 +220,27 @@ export default function AddPromptPage() {
             onChange={(e) => setFormData({ ...formData, created_at: e.target.value })}
             className="bg-[#242424] border-[#333]"
           />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-2">SEO titulek</label>
+          <Input
+            value={formData.seoTitle}
+            onChange={(e) => setFormData({ ...formData, seoTitle: e.target.value })}
+            className="bg-[#242424] border-[#333]"
+            placeholder="Pokud není vyplněno, použije se název promptu"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-2">SEO popis</label>
+          <div className="bg-[#242424] border-[#333] rounded-md">
+            <TipTap
+              content={formData.seoDescription}
+              onChange={(content) => setFormData({ ...formData, seoDescription: content })}
+              rows={4}
+            />
+          </div>
         </div>
 
         <Button 

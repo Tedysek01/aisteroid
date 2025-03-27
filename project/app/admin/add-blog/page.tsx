@@ -12,15 +12,15 @@ const TipTap = dynamic(() => import('@/components/TipTap'), { ssr: false });
 export default function AddBlogPage() {
   const [formData, setFormData] = useState({
     title: "",
-    perex: "",
+    excerpt: "",
     content: "",
     author: "",
-    created_at: new Date().toISOString().split('T')[0],
-    reading_time: "",
-    cover_image: null as File | null,
+    date: new Date().toISOString().split('T')[0],
+    readTime: "",
+    coverImage: null as File | null,
     tags: [] as string[],
-    seo_title: "",
-    seo_description: ""
+    seoTitle: "",
+    seoDescription: ""
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -48,15 +48,15 @@ export default function AddBlogPage() {
       // Reset formuláře
       setFormData({
         title: "",
-        perex: "",
+        excerpt: "",
         content: "",
         author: "",
-        created_at: new Date().toISOString().split('T')[0],
-        reading_time: "",
-        cover_image: null,
+        date: new Date().toISOString().split('T')[0],
+        readTime: "",
+        coverImage: null,
         tags: [],
-        seo_title: "",
-        seo_description: ""
+        seoTitle: "",
+        seoDescription: ""
       });
 
       alert('Blog byl úspěšně přidán!');
@@ -76,7 +76,7 @@ export default function AddBlogPage() {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
-    setFormData(prev => ({ ...prev, cover_image: file }));
+    setFormData(prev => ({ ...prev, coverImage: file }));
   };
 
   return (
@@ -98,8 +98,8 @@ export default function AddBlogPage() {
           <label className="block text-sm font-medium mb-2">Krátký úvod / perex</label>
           <div className="bg-[#242424] border-[#333] rounded-md">
             <TipTap
-              content={formData.perex}
-              onChange={(content) => setFormData({ ...formData, perex: content })}
+              content={formData.excerpt}
+              onChange={(content) => setFormData({ ...formData, excerpt: content })}
               required
               rows={4}
             />
@@ -111,7 +111,7 @@ export default function AddBlogPage() {
           <div className="bg-[#242424] border-[#333] rounded-md">
             <TipTap
               content={formData.content}
-              onChange={(content) => setFormData({ ...formData, content })}
+              onChange={(content) => setFormData({ ...formData, content: content })}
               required
               rows={8}
             />
@@ -132,8 +132,8 @@ export default function AddBlogPage() {
           <label className="block text-sm font-medium mb-2">Datum přidání</label>
           <Input
             type="date"
-            value={formData.created_at}
-            onChange={(e) => setFormData({ ...formData, created_at: e.target.value })}
+            value={formData.date}
+            onChange={(e) => setFormData({ ...formData, date: e.target.value })}
             className="bg-[#242424] border-[#333]"
             required
           />
@@ -143,8 +143,8 @@ export default function AddBlogPage() {
           <label className="block text-sm font-medium mb-2">Doba čtení (v minutách)</label>
           <Input
             type="number"
-            value={formData.reading_time}
-            onChange={(e) => setFormData({ ...formData, reading_time: e.target.value })}
+            value={formData.readTime}
+            onChange={(e) => setFormData({ ...formData, readTime: e.target.value })}
             className="bg-[#242424] border-[#333]"
             placeholder="Např. 5"
           />
@@ -174,8 +174,8 @@ export default function AddBlogPage() {
         <div>
           <label className="block text-sm font-medium mb-2">SEO titulek</label>
           <Input
-            value={formData.seo_title}
-            onChange={(e) => setFormData({ ...formData, seo_title: e.target.value })}
+            value={formData.seoTitle}
+            onChange={(e) => setFormData({ ...formData, seoTitle: e.target.value })}
             className="bg-[#242424] border-[#333]"
           />
         </div>
@@ -184,8 +184,8 @@ export default function AddBlogPage() {
           <label className="block text-sm font-medium mb-2">SEO popis</label>
           <div className="bg-[#242424] border-[#333] rounded-md">
             <TipTap
-              content={formData.seo_description}
-              onChange={(content) => setFormData({ ...formData, seo_description: content })}
+              content={formData.seoDescription}
+              onChange={(content) => setFormData({ ...formData, seoDescription: content })}
               rows={4}
             />
           </div>
