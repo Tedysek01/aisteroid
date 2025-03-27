@@ -196,14 +196,12 @@ export default function AddAgentPage() {
 
         <div>
           <label className="block text-sm font-medium mb-2">SEO popis</label>
-          <div className="bg-[#242424] border-[#333] rounded-md">
-            <TipTap
-              content={formData.seoDescription}
-              onChange={(content) => setFormData({ ...formData, seoDescription: content })}
-              rows={4}
-              placeholder="Pokud není vyplněno, použije se krátký popis"
-            />
-          </div>
+          <textarea
+            value={formData.seoDescription}
+            onChange={(e) => setFormData({ ...formData, seoDescription: e.target.value })}
+            className="w-full min-h-[100px] p-4 bg-[#242424] border border-[#333] rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Pokud není vyplněno, použije se krátký popis"
+          />
         </div>
 
         <Button 

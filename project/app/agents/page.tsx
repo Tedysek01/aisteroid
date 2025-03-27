@@ -5,9 +5,6 @@ import { Tag } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { AgentService, Agent } from "@/lib/services/agent-service";
-import { agentsMetadata } from '../metadata';
-
-export const metadata = agentsMetadata;
 
 export default function AgentsPage() {
   const [agents, setAgents] = useState<Agent[]>([]);

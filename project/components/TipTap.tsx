@@ -19,9 +19,10 @@ interface TipTapProps {
   onChange: (content: string) => void;
   required?: boolean;
   rows?: number;
+  placeholder?: string;
 }
 
-export default function TipTap({ content, onChange, required = false, rows = 4 }: TipTapProps) {
+export default function TipTap({ content, onChange, required = false, rows = 4, placeholder }: TipTapProps) {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -47,14 +48,15 @@ export default function TipTap({ content, onChange, required = false, rows = 4 }
         },
       }),
     ],
-    content: content,
+    content: content || '',
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML());
     },
     editorProps: {
       attributes: {
-        class: `prose prose-invert max-w-none min-h-[${rows * 24}px] p-4 focus:outline-none [&_a]:text-blue-400 [&_a:hover]:text-blue-300 [&_a]:underline [&_a]:underline-offset-4`,
-        'data-required': required ? 'true' : 'false'
+        class: `prose prose-invert max-w-none min-h-[${rows * 24}px] p-4 focus:outline-none [&_a]:text-blue-400 [&_a:hover]:text-blue-300 [&_a]:underline [&_a]:underline-offset-4 ${!content && placeholder ? 'before:content-[attr(data-placeholder)] before:text-gray-500 before:float-left before:pointer-events-none' : ''}`,
+        'data-required': required ? 'true' : 'false',
+        'data-placeholder': placeholder || ''
       }
     }
   });
