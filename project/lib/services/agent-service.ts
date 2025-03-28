@@ -26,6 +26,8 @@ export interface Agent extends DocumentData {
   video?: string;
   tags: string[];
   created_at: string;
+  seoTitle?: string;
+  seoDescription?: string;
 }
 
 const AGENT_COLLECTION = "agents";

@@ -43,14 +43,15 @@ export default function AdminLoginPage() {
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       if (email === "admin@example.com" && password === "admin123") {
-        // Uložení tokenu do HTTP-only cookie
+        // Uložení tokenu do cookie
         Cookies.set('adminToken', 'dummy-token', { 
           expires: 7, // Vyprší za 7 dní
-          secure: true, // Pouze přes HTTPS
-          sameSite: 'strict' // Ochrana proti CSRF
+          secure: process.env.NODE_ENV === 'production', // Pouze přes HTTPS v produkci
+          sameSite: 'lax' // Změněno na lax pro lepší kompatibilitu
         });
         
-        router.push("/admin/dashboard");
+        // Použití replace místo push pro lepší chování v historii
+        router.replace("/admin/dashboard");
       } else {
         setError("Nesprávné přihlašovací údaje");
       }

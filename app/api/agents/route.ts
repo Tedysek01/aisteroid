@@ -23,6 +23,8 @@ export async function POST(request: Request) {
       difficulty: formData.get('difficulty') as string,
       tags: JSON.parse(formData.get('tags') as string),
       created_at: new Date().toISOString(),
+      seoTitle: formData.get('seoTitle') as string || null,
+      seoDescription: formData.get('seoDescription') as string || null,
       slug: title
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '-')

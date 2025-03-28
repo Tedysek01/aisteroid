@@ -24,6 +24,8 @@ export interface Prompt {
   example_output: string;
   instructions: string;
   created_at: string;
+  seoTitle?: string;
+  seoDescription?: string;
 }
 
 // Seznam kategorií promptů
@@ -53,6 +55,8 @@ export class PromptService {
     example_output?: string;
     instructions?: string;
     created_at?: string;
+    seoTitle?: string;
+    seoDescription?: string;
   }): Promise<string> {
     try {
       console.log('Vstupní data pro vytvoření promptu:', data);
@@ -67,7 +71,9 @@ export class PromptService {
         example_output: data.example_output || '',
         instructions: data.instructions || '',
         created_at: data.created_at || new Date().toISOString(),
-        slug: data.slug
+        slug: data.slug,
+        seoTitle: data.seoTitle || '',
+        seoDescription: data.seoDescription || ''
       };
 
       console.log('Data pro uložení do Firebase:', promptData);

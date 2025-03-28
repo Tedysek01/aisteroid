@@ -1,5 +1,6 @@
+import { Metadata } from 'next';
+import { BlogServiceServer } from "@/lib/services/blog-service-server";
 import { BlogPostDetails } from "./blog-post-details";
-import { BlogService } from "@/lib/services/blog-service";
 
 // Definice dynamického renderování stránky - bude generována při každém požadavku
 export const dynamic = 'force-dynamic';
@@ -38,6 +39,30 @@ export const dynamic = 'force-dynamic';
 //     ];
 //   }
 // }
+
+// Generování metadat pro stránku blogu
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const post = await BlogServiceServer.getPost(params.slug);
+  
+  if (!post) {
+    return {
+      title: 'Blog nenalezen',
+      description: 'Požadovaný blog nebyl nalezen.'
+    };
+  }
+
+  return {
+    title: post.seoTitle || post.title,
+    description: post.seoDescription || post.excerpt,
+    openGraph: {
+      title: post.seoTitle || post.title,
+      description: post.seoDescription || post.excerpt,
+      type: 'article',
+      locale: 'cs_CZ',
+      images: post.coverImage ? [post.coverImage] : undefined,
+    },
+  };
+}
 
 export default function BlogPost({ params }: { params: { slug: string } }) {
   return <BlogPostDetails slug={params.slug} />;
