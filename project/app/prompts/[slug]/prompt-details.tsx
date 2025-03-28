@@ -44,7 +44,7 @@ export function PromptDetails({ prompt }: { prompt: Prompt | undefined }) {
                 <div dangerouslySetInnerHTML={{ __html: prompt.description }} />
               </div>
               
-              <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">Jak tento prompt použít</h2>
+              <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">Připravený prompt</h2>
               <div className="bg-black/30 rounded-lg p-4 sm:p-6 mb-6 sm:mb-8 overflow-auto max-h-[400px] sm:max-h-[600px]">
                 <div className="text-sm sm:text-base text-gray-300 whitespace-pre-wrap break-words overflow-hidden">
                   <div dangerouslySetInnerHTML={{ __html: prompt.prompt }} />
